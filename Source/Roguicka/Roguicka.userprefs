@@ -1,0 +1,13 @@
+﻿<Properties StartupItem="Roguicka\Roguicka.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Roguicka\Engine\Engine.cs">
+    <Files>
+      <File FileName="Roguicka\Program.cs" Line="9" Column="4" />
+      <File FileName="Roguicka\Engine\Engine.cs" Line="2" Column="13" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
