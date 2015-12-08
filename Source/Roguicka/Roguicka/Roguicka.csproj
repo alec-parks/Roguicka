@@ -43,6 +43,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actors\Enums.cs" />
+    <Compile Include="Actors\Hero.cs" />
+    <Compile Include="Actors\IActor.cs" />
+    <Compile Include="Engine.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
