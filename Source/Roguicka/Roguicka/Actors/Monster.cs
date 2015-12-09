@@ -1,8 +1,9 @@
-﻿using RLNET;
+﻿using System;
+using RLNET;
 
 namespace Roguicka.Actors
 {
-    class Hero : IActor
+    class Monster: IActor
     {
         public ActorType Type { get; set; }
         public int CurrentHP { get; set; }
@@ -12,25 +13,31 @@ namespace Roguicka.Actors
         public RLColor Color { get; set; }
         public char Symbol { get; set; }
 
-        Hero()
+        Monster()
         {
-          Type = ActorType.Player;  
+            Type = ActorType.Monster;
         }
 
-        public Hero(int xPos, int yPos, int currentHp, int maxHp, char symbol)
+        public Monster(int currentHp, int maxHp, int xPos, int yPos, RLColor color, char symbol)
         {
-            X = xPos;
-            Y = yPos;
             CurrentHP = currentHp;
             MaxHP = maxHp;
-            Type = ActorType.Player;
-            Color = RLColor.White;
+            X = xPos;
+            Y = yPos;
+            Color = color;
             Symbol = symbol;
+
+            Type = ActorType.Monster;
+        }
+
+        public bool IsInFov(IActor actor)
+        {
+            throw new NotImplementedException();
         }
 
         public bool IsDead()
         {
-            return CurrentHP <= 0 ;
+            return CurrentHP <= 0;
         }
     }
 }

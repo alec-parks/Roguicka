@@ -83,7 +83,10 @@ namespace Roguicka
                 }
             }
 
-            _rootConsole.Set(player.X, player.Y, RLColor.White, null, '@');
+            foreach (var actor in _actors)
+            {
+                _rootConsole.Set(actor.X,actor.Y,actor.Color,null,actor.Symbol);
+            }
 
             _rootConsole.Draw();
 

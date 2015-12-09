@@ -1,4 +1,6 @@
-﻿namespace Roguicka.Actors
+﻿using RLNET;
+
+namespace Roguicka.Actors
 {
     interface IActor
     {
@@ -7,6 +9,10 @@
         int MaxHP { get; set; }
         int X { get; set; }
         int Y { get; set; }
+
+        RLColor Color { get; set; }
+
+        char Symbol { get; set; }
 
         bool IsDead();
     }
