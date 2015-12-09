@@ -30,11 +30,6 @@ namespace Roguicka.Actors
             Type = ActorType.Monster;
         }
 
-        public bool IsInFov(IActor actor)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool IsDead()
         {
             return CurrentHP <= 0;

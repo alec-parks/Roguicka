@@ -83,11 +83,15 @@ namespace Roguicka
                 }
             }
 
-            foreach (var actor in _actors)
+            foreach (var actor in _actors.Where(actor => actor.Type == ActorType.Monster))
             {
-                _rootConsole.Set(actor.X,actor.Y,actor.Color,null,actor.Symbol);
+                var cell = _map.GetCell(actor.X, actor.Y);
+                if (cell.IsInFov)
+                {
+                    _rootConsole.Set(actor.X,actor.Y,actor.Color,null,actor.Symbol);
+                }
             }
-
+            _rootConsole.Set(player.X,player.Y,player.Color,null,player.Symbol);
             _rootConsole.Draw();
 
         }
