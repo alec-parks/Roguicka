@@ -103,28 +103,60 @@ namespace Roguicka
             if (keyPress == null) return;
             switch (keyPress.Key)
             {
+                case RLKey.Keypad8:
                 case RLKey.Up:
                     if (_map.GetCell(player.X, player.Y - 1).IsWalkable)
                     {
                         player.Y--;
                     }
                     break;
+                case RLKey.Keypad2:
                 case RLKey.Down:
                     if (_map.GetCell(player.X, player.Y + 1).IsWalkable)
                     {
                         player.Y++;
                     }
                     break;
+                case RLKey.Keypad4:
                 case RLKey.Left:
                     if (_map.GetCell(player.X - 1, player.Y).IsWalkable)
                     {
                         player.X--;
                     }
                     break;
+                case RLKey.Keypad6:
                 case RLKey.Right:
                     if (_map.GetCell(player.X + 1, player.Y).IsWalkable)
                     {
                         player.X++;
+                    }
+                    break;
+                case RLKey.Keypad7:
+                    if (_map.GetCell(player.X - 1, player.Y - 1).IsWalkable)
+                    {
+                        player.X--;
+                        player.Y--;
+                    }
+                    break;
+                case RLKey.Keypad9:
+                    if (_map.GetCell(player.X + 1, player.Y - 1).IsWalkable)
+                    {
+                        player.X++;
+                        player.Y--;
+                    }
+                    break;
+                case RLKey.Keypad1:
+                    if (_map.GetCell(player.X - 1, player.Y + 1).IsWalkable)
+                    {
+                        player.X--;
+                        player.Y++;
+                    }
+                    break;
+                case RLKey.Keypad3:
+                    if (_map.GetCell(player.X + 1, player.Y + 1).IsWalkable)
+                    {
+                        player.X++;
+                        player.Y++;
                     }
                     break;
             }

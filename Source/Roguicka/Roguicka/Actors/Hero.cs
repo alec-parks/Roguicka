@@ -32,5 +32,22 @@ namespace Roguicka.Actors
         {
             return CurrentHP <= 0 ;
         }
+
+        public void TakeDamage(int amount)
+        {
+            CurrentHP -= amount;
+        }
+
+        public void Heal(int amount)
+        {
+            if (amount + CurrentHP > MaxHP)
+            {
+                CurrentHP = MaxHP;
+            }
+            else
+            {
+                CurrentHP += amount;
+            }
+        }
     }
 }
