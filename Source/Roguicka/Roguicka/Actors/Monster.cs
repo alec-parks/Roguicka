@@ -33,19 +33,22 @@ namespace Roguicka.Actors
 
         public bool IsDead()
         {
-            bool dead = CurrentHP <= 0;
-            if (dead)
-            {
-                Symbol = '%';
-                Blocks = false;
-            }
-            return dead;
+            return CurrentHP <= 0;
         }
 
         public void TakeDamage(int amount)
         {
             CurrentHP -= amount;
-            IsDead();
+            if (IsDead())
+            {
+                SetDead();
+            }
+        }
+
+        private void SetDead()
+        {
+            Symbol = '%';
+            Blocks = false;
         }
     }
 }
