@@ -10,6 +10,7 @@ namespace Roguicka.Actors
         public int MaxHP { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
+        public bool Blocks { get; set; }
         public RLColor Color { get; set; }
         public char Symbol { get; set; }
 
@@ -26,7 +27,7 @@ namespace Roguicka.Actors
             Y = yPos;
             Color = color;
             Symbol = symbol;
-
+            Blocks = true;
             Type = ActorType.Monster;
         }
 
@@ -36,6 +37,7 @@ namespace Roguicka.Actors
             if (dead)
             {
                 Symbol = '%';
+                Blocks = false;
             }
             return dead;
         }
@@ -43,6 +45,7 @@ namespace Roguicka.Actors
         public void TakeDamage(int amount)
         {
             CurrentHP -= amount;
+            IsDead();
         }
     }
 }

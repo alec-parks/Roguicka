@@ -9,6 +9,7 @@ namespace Roguicka.Actors
         int MaxHP { get; set; }
         int X { get; set; }
         int Y { get; set; }
+        bool Blocks { get; set; }
 
         RLColor Color { get; set; }
 

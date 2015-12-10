@@ -9,8 +9,10 @@ namespace Roguicka.Actors
         public int MaxHP { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
+        public bool Blocks { get; set; }
         public RLColor Color { get; set; }
         public char Symbol { get; set; }
+        public int LightRadius { get; set; }
 
         Hero()
         {
@@ -26,6 +28,8 @@ namespace Roguicka.Actors
             Type = ActorType.Player;
             Color = RLColor.White;
             Symbol = symbol;
+            LightRadius = 25;
+            Blocks = true;
         }
 
         public bool IsDead()
