@@ -19,10 +19,10 @@ namespace Roguicka
             Monster mob = new Monster(5,5,10,15,RLColor.Green,'T');
             engine.AddActor(player);
             engine.AddActor(mob);
+            engine.Update();
+            engine.Render();
             while (!engine.RootConsole().IsWindowClosed())
             {
-                engine.Update();
-                engine.Render();
                 engine.RootConsole().Run();
             }
 

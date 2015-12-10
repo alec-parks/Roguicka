@@ -45,16 +45,16 @@ namespace Roguicka
             return _actors;
         }
 
-        public IActor GetHero()
+        public Hero GetHero()
         {
-            return _actors.Single(actor => actor.Type == ActorType.Player);
+            return (Hero) _actors.Single(actor => actor.Type == ActorType.Player);
         }
 
         private void OnRootConsoleRender(object sender, UpdateEventArgs e)
         {
             var player = GetHero();
             _rootConsole.Clear();
-            _map.ComputeFov(player.X, player.Y, 50, true);
+            _map.ComputeFov(player.X, player.Y, player.LightRadius, true);
 
             foreach (var cell in _map.GetAllCells())
             {
@@ -107,7 +107,15 @@ namespace Roguicka
                 case RLKey.Up:
                     if (_map.GetCell(player.X, player.Y - 1).IsWalkable)
                     {
-                        player.Y--;
+                        if (CheckForBlock(player.X, player.Y - 1))
+                        {
+                            var blocker = _actors.Find(actor => actor.X == player.X && actor.Y == player.Y - 1);
+                            blocker.TakeDamage(10);
+                        }
+                        else
+                        {
+                            player.Y--;
+                        }
                     }
                     break;
                 case RLKey.Keypad2:
@@ -166,6 +174,16 @@ namespace Roguicka
         public void AddActor(IActor actor)
         {
             _actors.Add(actor);
+        }
+
+        private bool CheckForBlock(int x, int y)
+        {
+            bool blocked = false;
+            foreach (var actor in _actors.Where(actor => actor.X == x && actor.Y ==y && actor.Blocks))
+            {
+                blocked = true;
+            }
+            return blocked;
         }
     }
 }
