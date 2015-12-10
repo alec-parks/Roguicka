@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roguicka", "Roguicka\Roguicka.csproj", "{B223CC16-7455-4956-B893-5C4DD2652C05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roguicka.Tests", "Roguicka.Tests\Roguicka.Tests.csproj", "{CD7E612C-7071-4208-AF14-DF891B7611C1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roguicka.Tests", "Roguicka.Tests\Roguicka.Tests.csproj", "{267C14E2-2AEB-4444-8EE3-C237AFC79EC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,14 +21,14 @@ Global
 		{B223CC16-7455-4956-B893-5C4DD2652C05}.Release|Any CPU.ActiveCfg = Release|x86
 		{B223CC16-7455-4956-B893-5C4DD2652C05}.Release|x86.ActiveCfg = Release|x86
 		{B223CC16-7455-4956-B893-5C4DD2652C05}.Release|x86.Build.0 = Release|x86
-		{CD7E612C-7071-4208-AF14-DF891B7611C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CD7E612C-7071-4208-AF14-DF891B7611C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CD7E612C-7071-4208-AF14-DF891B7611C1}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{CD7E612C-7071-4208-AF14-DF891B7611C1}.Debug|x86.Build.0 = Debug|Any CPU
-		{CD7E612C-7071-4208-AF14-DF891B7611C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CD7E612C-7071-4208-AF14-DF891B7611C1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CD7E612C-7071-4208-AF14-DF891B7611C1}.Release|x86.ActiveCfg = Release|Any CPU
-		{CD7E612C-7071-4208-AF14-DF891B7611C1}.Release|x86.Build.0 = Release|Any CPU
+		{267C14E2-2AEB-4444-8EE3-C237AFC79EC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{267C14E2-2AEB-4444-8EE3-C237AFC79EC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{267C14E2-2AEB-4444-8EE3-C237AFC79EC1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{267C14E2-2AEB-4444-8EE3-C237AFC79EC1}.Debug|x86.Build.0 = Debug|Any CPU
+		{267C14E2-2AEB-4444-8EE3-C237AFC79EC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{267C14E2-2AEB-4444-8EE3-C237AFC79EC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{267C14E2-2AEB-4444-8EE3-C237AFC79EC1}.Release|x86.ActiveCfg = Release|Any CPU
+		{267C14E2-2AEB-4444-8EE3-C237AFC79EC1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
