@@ -2,7 +2,7 @@
 
 namespace Roguicka.Actors
 {
-    class Hero : IActor
+    public class Hero : IActor
     {
         public ActorType Type { get; set; }
         public int CurrentHP { get; set; }
