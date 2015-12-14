@@ -1,9 +1,8 @@
-﻿using System;
-using RLNET;
+﻿using RLNET;
 
 namespace Roguicka.Actors
 {
-    class Monster: IActor
+    public class Monster: IActor
     {
         public ActorType Type { get; set; }
         public int CurrentHP { get; set; }
@@ -42,6 +41,18 @@ namespace Roguicka.Actors
             if (IsDead())
             {
                 SetDead();
+            }
+        }
+
+        public void Heal(int amount)
+        {
+            if (amount > MaxHP)
+            {
+                CurrentHP = MaxHP;
+            }
+            else
+            {
+                CurrentHP += amount;
             }
         }
 

@@ -17,5 +17,6 @@ namespace Roguicka.Actors
 
         bool IsDead();
         void TakeDamage(int amount);
+        void Heal(int amount);
     }
 }
