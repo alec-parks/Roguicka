@@ -41,6 +41,16 @@ namespace Roguicka.Tests.Actors.Tests
             Assert.True(sut.IsDead());
         }
 
+        [Fact]
+        public void ShouldNotBeDead()
+        {
+            for (int i = 1; i < 1000; i++)
+            {
+                var sut = new Monster(i, i, 1, 1, RLColor.Black, 'D');
+                Assert.False(sut.IsDead());
+            }
+        }
+
         [Theory]
         [InlineData(1, 9, 10)]
         [InlineData(10, 10, 20)]
@@ -62,6 +72,16 @@ namespace Roguicka.Tests.Actors.Tests
             sut.Heal(heal);
 
             Assert.Equal(result, sut.CurrentHP);
+        }
+
+        [Fact]
+        public void DyingShouldUnblock()
+        {
+            var sut = new Monster(10, 10, 1, 1, RLColor.Black, 'D');
+
+            sut.TakeDamage(20);
+
+            Assert.False(sut.Blocks);
         }
     }
 }
