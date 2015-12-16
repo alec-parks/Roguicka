@@ -11,9 +11,9 @@ namespace Roguicka
         private List<IActor> _actors = new List<IActor>(); 
         private readonly RLRootConsole _rootConsole;
         private readonly IMap _map;
-        public int ScreenWidth { get; set; }
-        public int ScreenHeight { get; set; }
-        public string FontFile { get; set; }
+        private int ScreenWidth { get; }
+        private int ScreenHeight { get; }
+        private string FontFile { get; }
 
         public Engine(int width, int height, string file, IMap map)
         {
@@ -45,7 +45,7 @@ namespace Roguicka
             return _actors;
         }
 
-        public Hero GetHero()
+        private Hero GetHero()
         {
             return (Hero) _actors.Single(actor => actor.Type == ActorType.Player);
         }
@@ -101,74 +101,85 @@ namespace Roguicka
             var player = GetHero();
             var keyPress = _rootConsole.Keyboard.GetKeyPress();
             if (keyPress == null) return;
+            HandleInput(player,keyPress);
+        }
+
+        private void HandleInput(IActor player, RLKeyPress keyPress)
+        {
+            bool newTurn = false;
+            int x;
+            int y;
             switch (keyPress.Key)
             {
                 case RLKey.Keypad8:
                 case RLKey.Up:
-                    if (_map.GetCell(player.X, player.Y - 1).IsWalkable)
-                    {
-                        if (CheckForBlock(player.X, player.Y - 1))
-                        {
-                            var blocker = _actors.Find(actor => actor.X == player.X && actor.Y == player.Y - 1);
-                            blocker.TakeDamage(10);
-                        }
-                        else
-                        {
-                            player.Y--;
-                        }
-                    }
+                    x = player.X;
+                    y = player.Y - 1;
+                    newTurn = Move(player, x, y);
                     break;
                 case RLKey.Keypad2:
                 case RLKey.Down:
-                    if (_map.GetCell(player.X, player.Y + 1).IsWalkable)
-                    {
-                        player.Y++;
-                    }
+                    x = player.X;
+                    y = player.Y + 1;
+                    newTurn = Move(player, x, y);
                     break;
                 case RLKey.Keypad4:
                 case RLKey.Left:
-                    if (_map.GetCell(player.X - 1, player.Y).IsWalkable)
-                    {
-                        player.X--;
-                    }
+                    x = player.X-1;
+                    y = player.Y;
+                    newTurn = Move(player, x, y);
                     break;
                 case RLKey.Keypad6:
                 case RLKey.Right:
-                    if (_map.GetCell(player.X + 1, player.Y).IsWalkable)
-                    {
-                        player.X++;
-                    }
+                    x = player.X+1;
+                    y = player.Y;
+                    newTurn = Move(player, x, y);
                     break;
                 case RLKey.Keypad7:
-                    if (_map.GetCell(player.X - 1, player.Y - 1).IsWalkable)
-                    {
-                        player.X--;
-                        player.Y--;
-                    }
+                    x = player.X-1;
+                    y = player.Y-1;
+                    newTurn = Move(player, x, y);
                     break;
                 case RLKey.Keypad9:
-                    if (_map.GetCell(player.X + 1, player.Y - 1).IsWalkable)
-                    {
-                        player.X++;
-                        player.Y--;
-                    }
+                    x = player.X+1;
+                    y = player.Y-1;
+                    newTurn = Move(player, x, y);
                     break;
                 case RLKey.Keypad1:
-                    if (_map.GetCell(player.X - 1, player.Y + 1).IsWalkable)
-                    {
-                        player.X--;
-                        player.Y++;
-                    }
+                    x = player.X-1;
+                    y = player.Y+1;
+                    newTurn = Move(player, x, y);
                     break;
                 case RLKey.Keypad3:
-                    if (_map.GetCell(player.X + 1, player.Y + 1).IsWalkable)
-                    {
-                        player.X++;
-                        player.Y++;
-                    }
+                    x = player.X+1;
+                    y = player.Y+1;
+                    newTurn = Move(player, x, y);
+                    break;
+                case RLKey.Keypad5:
+                    newTurn = true;
                     break;
             }
+        }
 
+        private bool Move(IActor actor, int newX, int newY)
+        {
+            bool turn = false;
+            if (_map.GetCell(newX, newY).IsWalkable)
+            {
+                if (CheckForBlock(newX, newY))
+                {
+                    var blocker = _actors.Find(blocked => blocked.X == newX && blocked.Y == newY);
+                    blocker.TakeDamage(10);
+                    turn = true;
+                }
+                else
+                {
+                    actor.X = newX;
+                    actor.Y = newY;
+                    turn = true;
+                }
+            }
+            return turn;
         }
 
         public void AddActor(IActor actor)
