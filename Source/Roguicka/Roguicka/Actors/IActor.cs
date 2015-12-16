@@ -15,7 +15,8 @@ namespace Roguicka.Actors
 
         char Symbol { get; set; }
 
-        bool IsDead();
+        bool IsDead { get; }
+
         void TakeDamage(int amount);
         void Heal(int amount);
     }

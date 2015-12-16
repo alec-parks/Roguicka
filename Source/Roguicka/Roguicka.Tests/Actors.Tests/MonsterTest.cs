@@ -38,7 +38,7 @@ namespace Roguicka.Tests.Actors.Tests
 
             sut.TakeDamage(damage);
 
-            Assert.True(sut.IsDead());
+            Assert.True(sut.IsDead);
         }
 
         [Fact]
@@ -47,7 +47,7 @@ namespace Roguicka.Tests.Actors.Tests
             for (int i = 1; i < 1000; i++)
             {
                 var sut = new Monster(i, i, 1, 1, RLColor.Black, 'D');
-                Assert.False(sut.IsDead());
+                Assert.False(sut.IsDead);
             }
         }
 

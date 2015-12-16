@@ -30,15 +30,12 @@ namespace Roguicka.Actors
             Type = ActorType.Monster;
         }
 
-        public bool IsDead()
-        {
-            return CurrentHP <= 0;
-        }
+        public bool IsDead => CurrentHP <= 0;
 
         public void TakeDamage(int amount)
         {
             CurrentHP -= amount;
-            if (IsDead())
+            if (IsDead)
             {
                 SetDead();
             }

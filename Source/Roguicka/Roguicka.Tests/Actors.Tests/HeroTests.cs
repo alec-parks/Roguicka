@@ -10,7 +10,7 @@ namespace Roguicka.Tests.Actors.Tests
         {
             var sut = new Hero(1,1,10,10,'@');
 
-            Assert.False(sut.IsDead());
+            Assert.False(sut.IsDead);
         }
 
         [Theory]
@@ -20,7 +20,7 @@ namespace Roguicka.Tests.Actors.Tests
         {
             var sut = new Hero(1, 1, hp, 10, '@');
 
-            Assert.True(sut.IsDead());
+            Assert.True(sut.IsDead);
         }
 
         [Theory]
