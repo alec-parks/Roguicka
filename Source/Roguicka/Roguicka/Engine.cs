@@ -40,10 +40,9 @@ namespace Roguicka
             _rootConsole.Render += OnRootConsoleRender;
         }
 
-        public IEnumerable<IActor> GetActors()
-        {
-            return _actors;
-        }
+        private IEnumerable<IActor> GetActors() => _actors;
+
+        private IEnumerable<IActor> GetActors(ActorType type) => _actors.Where(actor=> actor.Type == type);
 
         private Hero GetHero()
         {
@@ -159,6 +158,18 @@ namespace Roguicka
                     newTurn = true;
                     break;
             }
+            if (newTurn)
+            {
+                MonsterMash();
+            }
+        }
+
+        private void MonsterMash()
+        {
+            foreach (var monster in GetActors(ActorType.Monster))
+            {
+            }
+            throw new System.NotImplementedException();
         }
 
         private bool Move(IActor actor, int newX, int newY)
