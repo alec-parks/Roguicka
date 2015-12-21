@@ -10,7 +10,7 @@ namespace Roguicka
     {
         private List<IActor> _actors = new List<IActor>(); 
         private readonly RLRootConsole _rootConsole;
-        private readonly IMap _map;
+        private readonly RoguickaMap _map;
         private int ScreenWidth { get; }
         private int ScreenHeight { get; }
         private string FontFile { get; }
@@ -20,7 +20,7 @@ namespace Roguicka
             ScreenHeight = height;
             ScreenWidth = width;
             FontFile = file;
-            _map = map;
+            _map.Map = map;
 
             _rootConsole = new RLRootConsole(FontFile,ScreenWidth,ScreenHeight,8,8,1f,"RoguickaRL");
         }
@@ -40,8 +40,6 @@ namespace Roguicka
             _rootConsole.Render += OnRootConsoleRender;
         }
 
-        private IEnumerable<IActor> GetActors() => _actors;
-
         private IEnumerable<IActor> GetActors(ActorType type) => _actors.Where(actor=> actor.Type == type);
 
         private Hero GetHero()
@@ -55,7 +53,7 @@ namespace Roguicka
             _rootConsole.Clear();
             _map.ComputeFov(player.X, player.Y, player.LightRadius, true);
 
-            foreach (var cell in _map.GetAllCells())
+            foreach (var cell in _map.Map.GetAllCells())
             {
                 if (cell.IsInFov)
                 {
@@ -166,10 +164,16 @@ namespace Roguicka
 
         private void MonsterMash()
         {
+            var hero = GetHero();
+            
             foreach (var monster in GetActors(ActorType.Monster))
             {
+                _map.ComputeFov(monster.X, monster.Y, 5, true);
+                if (_map.GetCell(hero.X, hero.Y).IsInFov)
+                {
+                    
+                }
             }
-            throw new System.NotImplementedException();
         }
 
         private bool Move(IActor actor, int newX, int newY)
