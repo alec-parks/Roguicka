@@ -4,20 +4,15 @@ namespace Roguicka.Actors
 {
     public class Hero : IActor
     {
-        public ActorType Type { get; set; }
+        public ActorType Type { get; set; } = ActorType.Player;
         public int CurrentHP { get; set; }
         public int MaxHP { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-        public bool Blocks { get; set; }
+        public bool Blocks { get; set; } = true;
         public RLColor Color { get; set; }
         public char Symbol { get; set; }
         public int LightRadius { get; set; }
-
-        Hero()
-        {
-          Type = ActorType.Player;  
-        }
 
         public Hero(int xPos, int yPos, int currentHp, int maxHp, char symbol)
         {
@@ -25,11 +20,9 @@ namespace Roguicka.Actors
             Y = yPos;
             CurrentHP = currentHp;
             MaxHP = maxHp;
-            Type = ActorType.Player;
             Color = RLColor.White;
             Symbol = symbol;
             LightRadius = 25;
-            Blocks = true;
         }
 
         public bool IsDead => CurrentHP <= 0;
