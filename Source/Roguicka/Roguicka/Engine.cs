@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using RLNET;
 using RogueSharp;
 using Roguicka.Actors;
@@ -10,17 +11,18 @@ namespace Roguicka
     {
         private List<IActor> _actors = new List<IActor>(); 
         private readonly RLRootConsole _rootConsole;
-        private readonly RoguickaMap _map;
+        private readonly IMap _map;
         private int ScreenWidth { get; }
         private int ScreenHeight { get; }
         private string FontFile { get; }
+
 
         public Engine(int width, int height, string file, IMap map)
         {
             ScreenHeight = height;
             ScreenWidth = width;
             FontFile = file;
-            _map.Map = map;
+            _map = map;
 
             _rootConsole = new RLRootConsole(FontFile,ScreenWidth,ScreenHeight,8,8,1f,"RoguickaRL");
         }
@@ -42,6 +44,8 @@ namespace Roguicka
 
         private IEnumerable<IActor> GetActors(ActorType type) => _actors.Where(actor=> actor.Type == type);
 
+        private IEnumerable<IActor> GetActors() => _actors;
+
         private Hero GetHero()
         {
             return (Hero) _actors.Single(actor => actor.Type == ActorType.Player);
@@ -53,44 +57,47 @@ namespace Roguicka
             _rootConsole.Clear();
             _map.ComputeFov(player.X, player.Y, player.LightRadius, true);
 
-            foreach (var cell in _map.Map.GetAllCells())
-            {
-                if (cell.IsInFov)
-                {
-                    _map.SetCellProperties(cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, true);
-                    if (cell.IsWalkable)
-                    {
-                        _rootConsole.Set(cell.X, cell.Y, RLColor.Gray, null, '.');
-                    }
-                    else
-                    {
-                        _rootConsole.Set(cell.X, cell.Y, RLColor.LightGray, null, '#');
-                    }
-                }
-                else if (cell.IsExplored)
-                {
-                    if (cell.IsWalkable)
-                    {
-                        _rootConsole.Set(cell.X, cell.Y, new RLColor(30, 30, 30), null, '.');
-                    }
-                    else
-                    {
-                        _rootConsole.Set(cell.X, cell.Y, RLColor.Gray, null, '#');
-                    }
-                }
-            }
+            Parallel.ForEach(_map.GetAllCells(), DrawCell);
 
-            foreach (var actor in _actors.Where(actor => actor.Type == ActorType.Monster))
+            Parallel.ForEach(GetActors(ActorType.Monster), monster =>
             {
-                var cell = _map.GetCell(actor.X, actor.Y);
+                var cell = _map.GetCell(monster.X, monster.Y);
                 if (cell.IsInFov)
                 {
-                    _rootConsole.Set(actor.X,actor.Y,actor.Color,null,actor.Symbol);
+                    _rootConsole.Set(monster.X, monster.Y, monster.Color, null, monster.Symbol);
                 }
-            }
+            });
+
             _rootConsole.Set(player.X,player.Y,player.Color,null,player.Symbol);
             _rootConsole.Draw();
 
+        }
+
+        private void DrawCell(Cell cell)
+        {
+            if (cell.IsInFov)
+            {
+                _map.SetCellProperties(cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, true);
+                if (cell.IsWalkable)
+                {
+                    _rootConsole.Set(cell.X, cell.Y, RLColor.Gray, null, '.');
+                }
+                else
+                {
+                    _rootConsole.Set(cell.X, cell.Y, RLColor.LightGray, null, '#');
+                }
+            }
+            else if (cell.IsExplored)
+            {
+                if (cell.IsWalkable)
+                {
+                    _rootConsole.Set(cell.X, cell.Y, new RLColor(30, 30, 30), null, '.');
+                }
+                else
+                {
+                    _rootConsole.Set(cell.X, cell.Y, RLColor.Gray, null, '#');
+                }
+            }
         }
 
         private void OnRootConsoleUpdate(object sender, UpdateEventArgs e)
@@ -205,10 +212,11 @@ namespace Roguicka
         private bool CheckForBlock(int x, int y)
         {
             bool blocked = false;
-            foreach (var actor in _actors.Where(actor => actor.X == x && actor.Y ==y && actor.Blocks))
+            Parallel.ForEach(GetActors(), blocking =>
             {
-                blocked = true;
-            }
+                blocked = (blocking.X == x && blocking.Y == y && blocking.Blocks);
+            });
+            
             return blocked;
         }
     }
