@@ -15,7 +15,7 @@ namespace Roguicka
         private int ScreenWidth { get; }
         private int ScreenHeight { get; }
         private string FontFile { get; }
-
+        private GameState gameState = GameState.Initialize;
 
         public Engine(int width, int height, string file, IMap map)
         {
@@ -25,6 +25,7 @@ namespace Roguicka
             _map = map;
 
             _rootConsole = new RLRootConsole(FontFile,ScreenWidth,ScreenHeight,8,8,1f,"RoguickaRL");
+            gameState = GameState.PlayerTurn;
         }
 
         public RLRootConsole RootConsole()
@@ -165,6 +166,7 @@ namespace Roguicka
             }
             if (newTurn)
             {
+                gameState = GameState.NewTurn;
                 MonsterMash();
             }
         }
@@ -181,6 +183,7 @@ namespace Roguicka
                     
                 }
             }
+            gameState = GameState.PlayerTurn;
         }
 
         private bool Move(IActor actor, int newX, int newY)
