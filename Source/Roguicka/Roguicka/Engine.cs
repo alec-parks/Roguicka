@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Threading.Tasks;
 using RLNET;
 using RogueSharp;
@@ -199,12 +200,16 @@ namespace Roguicka
                         }// Else, check for ability to move step DX
                         else if(CanMove(monster.X + stepDx, monster.Y))
                         {
-                            Move(monster, monster.X + dx, monster.Y + dy);
+                            Move(monster, monster.X + stepDx, monster.Y);
                         }// Else, check for ability to move step DY
                         else if (CanMove(monster.X, monster.Y + stepDy))
                         {
                             Move(monster, monster.X, monster.Y + stepDy);
                         }
+                    }
+                    else
+                    {
+                        Move(monster, monster.X + dx, monster.Y + dy);
                     }
                     monster.Chase--;
                 }
