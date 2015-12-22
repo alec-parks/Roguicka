@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using RLNET;
@@ -9,13 +10,14 @@ namespace Roguicka
 {
     class Engine
     {
-        private List<IActor> _actors = new List<IActor>(); 
+        private List<IActor> _actors = new List<IActor>();
+        private readonly int CHASETURNS = 3;
         private readonly RLRootConsole _rootConsole;
         private readonly IMap _map;
         private int ScreenWidth { get; }
         private int ScreenHeight { get; }
         private string FontFile { get; }
-        private GameState gameState = GameState.Initialize;
+        private GameState gameState;
 
         public Engine(int width, int height, string file, IMap map)
         {
@@ -58,7 +60,7 @@ namespace Roguicka
             _rootConsole.Clear();
             _map.ComputeFov(player.X, player.Y, player.LightRadius, true);
 
-            Parallel.ForEach(_map.GetAllCells(), DrawCell);
+            Parallel.ForEach(_map.GetAllCells(), SetCell);
 
             Parallel.ForEach(GetActors(ActorType.Monster), monster =>
             {
@@ -74,7 +76,7 @@ namespace Roguicka
 
         }
 
-        private void DrawCell(Cell cell)
+        private void SetCell(Cell cell)
         {
             if (cell.IsInFov)
             {
@@ -175,15 +177,49 @@ namespace Roguicka
         {
             var hero = GetHero();
             
-            foreach (var monster in GetActors(ActorType.Monster))
+            foreach (var monster in GetActors(ActorType.Monster).Where(monster=>!monster.IsDead).Cast<Monster>())
             {
                 _map.ComputeFov(monster.X, monster.Y, 5, true);
+                if (monster.Chase > 0)
+                {
+                    //Calculate next square
+                    int dx = hero.X - monster.X;
+                    int dy = hero.Y - monster.Y;
+                    int stepDx = (dx > 0 ? 1 : -1);
+                    int stepDy = (dy > 0 ? 1 : -1);
+                    var distance = Math.Sqrt(dx*dx + dy*dy);
+                    if (distance > 2)
+                    {
+                        dx = (int) Math.Round(dx/distance);
+                        dy = (int) Math.Round(dy/distance);
+                        // Check for ability to move at diagonal
+                        if (CanMove(monster.X + dx, monster.Y + dy))
+                        {
+                            Move(monster, monster.X + dx, monster.Y + dy);
+                        }// Else, check for ability to move step DX
+                        else if(CanMove(monster.X + stepDx, monster.Y))
+                        {
+                            Move(monster, monster.X + dx, monster.Y + dy);
+                        }// Else, check for ability to move step DY
+                        else if (CanMove(monster.X, monster.Y + stepDy))
+                        {
+                            Move(monster, monster.X, monster.Y + stepDy);
+                        }
+                    }
+                    monster.Chase--;
+                }
+
                 if (_map.GetCell(hero.X, hero.Y).IsInFov)
                 {
-                    
+                    monster.Chase = CHASETURNS;
                 }
             }
             gameState = GameState.PlayerTurn;
+        }
+
+        private bool CanMove(int x, int y)
+        {
+            return _map.GetCell(x, y).IsWalkable;
         }
 
         private bool Move(IActor actor, int newX, int newY)

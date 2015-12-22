@@ -12,6 +12,7 @@ namespace Roguicka.Actors
         public bool Blocks { get; set; }
         public RLColor Color { get; set; }
         public char Symbol { get; set; }
+        public int Chase { get; set; } = 3;
 
         Monster()
         {
