@@ -10,9 +10,10 @@ namespace Roguicka.Actors
         public int X { get; set; }
         public int Y { get; set; }
         public bool Blocks { get; set; } = true;
-        public RLColor Color { get; set; }
+        public RLColor Color { get; set; } = RLColor.White;
         public char Symbol { get; set; }
-        public int LightRadius { get; set; }
+        public int LightRadius { get; set; } = 10;
+        public bool IsDead => CurrentHP <= 0;
 
         public Hero(int xPos, int yPos, int currentHp, int maxHp, char symbol)
         {
@@ -20,12 +21,8 @@ namespace Roguicka.Actors
             Y = yPos;
             CurrentHP = currentHp;
             MaxHP = maxHp;
-            Color = RLColor.White;
             Symbol = symbol;
-            LightRadius = 25;
         }
-
-        public bool IsDead => CurrentHP <= 0;
 
         public void TakeDamage(int amount)
         {

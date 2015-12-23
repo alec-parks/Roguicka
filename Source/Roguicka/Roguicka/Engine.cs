@@ -61,16 +61,18 @@ namespace Roguicka
             _rootConsole.Clear();
             _map.ComputeFov(player.X, player.Y, player.LightRadius, true);
 
-            Parallel.ForEach(_map.GetAllCells(), SetCell);
-
-            Parallel.ForEach(GetActors(ActorType.Monster), monster =>
+            foreach (var cell in _map.GetAllCells())
             {
-                var cell = _map.GetCell(monster.X, monster.Y);
-                if (cell.IsInFov)
-                {
-                    _rootConsole.Set(monster.X, monster.Y, monster.Color, null, monster.Symbol);
-                }
-            });
+                SetCell(cell);
+            }
+
+            foreach (var monster in 
+                from monster in GetActors(ActorType.Monster)
+                let cell = _map.GetCell(monster.X, monster.Y)
+                where cell.IsInFov select monster)
+            {
+                _rootConsole.Set(monster.X, monster.Y, monster.Color, null, monster.Symbol);
+            }
 
             _rootConsole.Set(player.X,player.Y,player.Color,null,player.Symbol);
             _rootConsole.Draw();
@@ -256,10 +258,13 @@ namespace Roguicka
         private bool CheckForBlock(int x, int y)
         {
             bool blocked = false;
-            Parallel.ForEach(GetActors(), blocking =>
+            foreach (var actor in GetActors())
             {
-                blocked = (blocking.X == x && blocking.Y == y && blocking.Blocks);
-            });
+                if (actor.X == x && actor.Y == y && actor.Blocks)
+                {
+                    blocked = true;
+                }
+            }
             
             return blocked;
         }
