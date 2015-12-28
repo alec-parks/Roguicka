@@ -4,6 +4,7 @@ using System.Linq;
 using RLNET;
 using RogueSharp;
 using Roguicka.Actors;
+using Roguicka.Maps;
 
 namespace Roguicka
 {
@@ -12,18 +13,18 @@ namespace Roguicka
         private List<IActor> _actors = new List<IActor>();
         private readonly int CHASETURNS = 3;
         private readonly RLRootConsole _rootConsole;
-        private readonly RoguickaMap _map;
+        private readonly IRoguickaMap _map;
         private int ScreenWidth { get; }
         private int ScreenHeight { get; }
         private string FontFile { get; }
         private GameState gameState;
 
-        public Engine(int width, int height, string file, IMap map)
+        public Engine(int width, int height, string file, IRoguickaMap map)
         {
             ScreenHeight = height;
             ScreenWidth = width;
             FontFile = file;
-            _map = (RoguickaMap) map;
+            _map = map;
 
             _rootConsole = new RLRootConsole(FontFile,ScreenWidth,ScreenHeight,8,8,1f,"RoguickaRL");
             gameState = GameState.PlayerTurn;

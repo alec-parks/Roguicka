@@ -1,10 +1,11 @@
 ﻿using RLNET;
 using RogueSharp;
 using Roguicka.Actors;
+using Roguicka.Maps;
 
 namespace Roguicka
 {
-	class MainClass
+	public class MainClass
 	{
         private static readonly int ScreenWidth = 50;
         private static readonly int ScreenHeight = 50;
