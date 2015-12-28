@@ -12,7 +12,7 @@ namespace Roguicka
         private List<IActor> _actors = new List<IActor>();
         private readonly int CHASETURNS = 3;
         private readonly RLRootConsole _rootConsole;
-        private readonly IMap _map;
+        private readonly RoguickaMap _map;
         private int ScreenWidth { get; }
         private int ScreenHeight { get; }
         private string FontFile { get; }
@@ -23,7 +23,7 @@ namespace Roguicka
             ScreenHeight = height;
             ScreenWidth = width;
             FontFile = file;
-            _map = map;
+            _map = (RoguickaMap) map;
 
             _rootConsole = new RLRootConsole(FontFile,ScreenWidth,ScreenHeight,8,8,1f,"RoguickaRL");
             gameState = GameState.PlayerTurn;
@@ -48,11 +48,6 @@ namespace Roguicka
 
         private IEnumerable<IActor> GetActors() => _actors;
 
-        private IEnumerable<IDestructible> GetDestructible()
-        {
-            return _actors.Select(destructible => destructible as IDestructible);
-        }
-
         private IEnumerable<IDestructible> GetDestructible(ActorType type)
         {
             return from destructible 
@@ -72,7 +67,7 @@ namespace Roguicka
             _rootConsole.Clear();
             _map.ComputeFov(player.X, player.Y, player.LightRadius, true);
 
-            foreach (var cell in _map.GetAllCells())
+            foreach (Cell cell in _map.GetAllCells())
             {
                 SetCell(cell);
             }
@@ -225,7 +220,7 @@ namespace Roguicka
                         Move(monster, monster.X + dx, monster.Y + dy);
                     }
                     monster.Chase--;
-                }
+                }//Add in path movement to random cell
 
                 if (_map.GetCell(hero.X, hero.Y).IsInFov)
                 {
