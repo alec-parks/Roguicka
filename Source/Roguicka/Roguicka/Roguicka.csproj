@@ -46,6 +46,7 @@
     <Compile Include="Actors\Enums.cs" />
     <Compile Include="Actors\Hero.cs" />
     <Compile Include="Actors\IActor.cs" />
+    <Compile Include="Actors\IDestructible.cs" />
     <Compile Include="Actors\Monster.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="GlobalEnums.cs" />

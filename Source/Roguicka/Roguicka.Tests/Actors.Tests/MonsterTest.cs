@@ -26,7 +26,7 @@ namespace Roguicka.Tests.Actors.Tests
 
             sut.TakeDamage(damage);
 
-            Assert.Equal(result, sut.CurrentHP);
+            Assert.Equal(result, sut.CurrentHp);
         }
 
         [Theory]
@@ -59,7 +59,7 @@ namespace Roguicka.Tests.Actors.Tests
             var sut = new Monster(hp, result, 1, 1, RLColor.Black, 'D');
             sut.Heal(heal);
 
-            Assert.Equal(result, sut.CurrentHP);
+            Assert.Equal(result, sut.CurrentHp);
         }
 
         [Theory]
@@ -71,7 +71,7 @@ namespace Roguicka.Tests.Actors.Tests
 
             sut.Heal(heal);
 
-            Assert.Equal(result, sut.CurrentHP);
+            Assert.Equal(result, sut.CurrentHp);
         }
 
         [Fact]

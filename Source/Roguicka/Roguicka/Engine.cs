@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Media;
-using System.Threading.Tasks;
 using RLNET;
 using RogueSharp;
 using Roguicka.Actors;
@@ -49,6 +47,19 @@ namespace Roguicka
         private IEnumerable<IActor> GetActors(ActorType type) => _actors.Where(actor=> actor.Type == type);
 
         private IEnumerable<IActor> GetActors() => _actors;
+
+        private IEnumerable<IDestructible> GetDestructible()
+        {
+            return _actors.Select(destructible => destructible as IDestructible);
+        }
+
+        private IEnumerable<IDestructible> GetDestructible(ActorType type)
+        {
+            return from destructible 
+                   in _actors
+                   where destructible.Type == type
+                   select destructible as IDestructible;
+        }
 
         private Hero GetHero()
         {
@@ -180,7 +191,7 @@ namespace Roguicka
         {
             var hero = GetHero();
             
-            foreach (var monster in GetActors(ActorType.Monster).Where(monster=>!monster.IsDead).Cast<Monster>())
+            foreach (var monster in GetDestructible(ActorType.Monster).Where(monster=>!monster.IsDead).Cast<Monster>())
             {
                 _map.ComputeFov(monster.X, monster.Y, 5, true);
                 if (monster.Chase > 0)
@@ -236,8 +247,8 @@ namespace Roguicka
             {
                 if (CheckForBlock(newX, newY))
                 {
-                    var blocker = _actors.Find(blocked => blocked.X == newX && blocked.Y == newY);
-                    blocker.TakeDamage(10);
+                    var blocker = _actors.Find(blocked => blocked.X == newX && blocked.Y == newY) as IDestructible;
+                    blocker?.TakeDamage(10);
                     turn = true;
                 }
                 else

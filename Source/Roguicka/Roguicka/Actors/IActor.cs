@@ -2,22 +2,13 @@
 
 namespace Roguicka.Actors
 {
-    interface IActor
+    public interface IActor
     {
-        ActorType Type { get; set; }
-        int CurrentHP { get; set; }
-        int MaxHP { get; set; }
+        ActorType Type { get; }
         int X { get; set; }
         int Y { get; set; }
-        bool Blocks { get; set; }
-
-        RLColor Color { get; set; }
-
-        char Symbol { get; set; }
-
-        bool IsDead { get; }
-
-        void TakeDamage(int amount);
-        void Heal(int amount);
+        bool Blocks { get; }
+        RLColor Color { get; }
+        char Symbol { get; }
     }
 }

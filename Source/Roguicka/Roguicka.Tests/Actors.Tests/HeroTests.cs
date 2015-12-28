@@ -30,7 +30,7 @@ namespace Roguicka.Tests.Actors.Tests
         {
             var sut = new Hero(1, 1, start, start + heal, '@');
             sut.Heal(heal);
-            Assert.Equal(result,sut.CurrentHP);
+            Assert.Equal(result,sut.CurrentHp);
         }
 
         [Theory]
@@ -40,7 +40,7 @@ namespace Roguicka.Tests.Actors.Tests
         {
             var sut = new Hero(1, 1, start, max, '@');
             sut.Heal(heal);
-            Assert.Equal(max,sut.CurrentHP);
+            Assert.Equal(max,sut.CurrentHp);
         }
     }
 }
