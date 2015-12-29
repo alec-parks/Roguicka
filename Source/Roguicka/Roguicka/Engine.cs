@@ -175,6 +175,10 @@ namespace Roguicka
                 case RLKey.Keypad5:
                     newTurn = true;
                     break;
+                case RLKey.C:
+                    GetHero().AddElement(new FireElement());
+                    newTurn = true;
+                    break;
             }
             if (newTurn)
             {
@@ -192,43 +196,58 @@ namespace Roguicka
                 _map.ComputeFov(monster.X, monster.Y, 5, true);
                 if (monster.Chase > 0)
                 {
-                    //Calculate next square
-                    int dx = hero.X - monster.X;
-                    int dy = hero.Y - monster.Y;
-                    int stepDx = (dx > 0 ? 1 : -1);
-                    int stepDy = (dy > 0 ? 1 : -1);
-                    var distance = Math.Sqrt(dx*dx + dy*dy);
-                    if (distance > 2)
-                    {
-                        dx = (int) Math.Round(dx/distance);
-                        dy = (int) Math.Round(dy/distance);
-                        // Check for ability to move at diagonal
-                        if (CanMove(monster.X + dx, monster.Y + dy))
-                        {
-                            Move(monster, monster.X + dx, monster.Y + dy);
-                        }// Else, check for ability to move step DX
-                        else if(CanMove(monster.X + stepDx, monster.Y))
-                        {
-                            Move(monster, monster.X + stepDx, monster.Y);
-                        }// Else, check for ability to move step DY
-                        else if (CanMove(monster.X, monster.Y + stepDy))
-                        {
-                            Move(monster, monster.X, monster.Y + stepDy);
-                        }
-                    }
-                    else
-                    {
-                        Move(monster, monster.X + dx, monster.Y + dy);
-                    }
+                    MonsterMove(monster,hero.X,hero.Y);
                     monster.Chase--;
-                }//Add in path movement to random cell
+                }
+                else if (monster.Target == null)
+                {
+                    monster.Target = _map.GetRandomCell();
+                    //Do the Move
+                    MonsterMove(monster, monster.Target.X, monster.Target.Y);
+                }
+                else
+                {
+                    MonsterMove(monster, monster.Target.X, monster.Target.Y);
+                }
 
                 if (_map.GetCell(hero.X, hero.Y).IsInFov)
                 {
                     monster.Chase = CHASETURNS;
+                    monster.Target = null;
                 }
             }
             gameState = GameState.PlayerTurn;
+        }
+
+        private void MonsterMove(IActor sourceActor,int targetX, int targetY)
+        {
+            int dx = targetX - sourceActor.X;
+            int dy = targetY - sourceActor.Y;
+            int stepDx = (dx > 0 ? 1 : -1);
+            int stepDy = (dy > 0 ? 1 : -1);
+            var distance = Math.Sqrt(dx * dx + dy * dy);
+            if (distance > 2)
+            {
+                dx = (int)Math.Round(dx / distance);
+                dy = (int)Math.Round(dy / distance);
+                // Check for ability to move at diagonal
+                if (CanMove(sourceActor.X + dx, sourceActor.Y + dy))
+                {
+                    Move(sourceActor, sourceActor.X + dx, sourceActor.Y + dy);
+                }// Else, check for ability to move step DX
+                else if (CanMove(sourceActor.X + stepDx, sourceActor.Y))
+                {
+                    Move(sourceActor, sourceActor.X + stepDx, sourceActor.Y);
+                }// Else, check for ability to move step DY
+                else if (CanMove(sourceActor.X, sourceActor.Y + stepDy))
+                {
+                    Move(sourceActor, sourceActor.X, sourceActor.Y + stepDy);
+                }
+            }
+            else
+            {
+                Move(sourceActor, sourceActor.X + dx, sourceActor.Y + dy);
+            }
         }
 
         private bool CanMove(int x, int y)

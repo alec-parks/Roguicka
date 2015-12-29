@@ -1,19 +1,21 @@
 ﻿using RLNET;
+using RogueSharp;
 
 namespace Roguicka.Actors
 {
     public class Monster: IActor, IDestructible
     {
-        public ActorType Type { get; set; } = ActorType.Monster;
+        public ActorType Type { get; } = ActorType.Monster;
         public int CurrentHp { get; set; }
         public int MaxHp { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-        public bool Blocks { get; set; } = true;
-        public RLColor Color { get; set; }
-        public char Symbol { get; set; }
-        public int Chase { get; set; } = 3;
+        public bool Blocks { get; private set; } = true;
+        public RLColor Color { get; }
+        public char Symbol { get; private set; }
+        public int Chase { get; set; } = 0;
         public bool IsDead => CurrentHp <= 0;
+        public Cell Target { get; set; }
 
         public Monster(int currentHp, int maxHp, int xPos, int yPos, RLColor color, char symbol)
         {
