@@ -6,4 +6,14 @@
         Monster
     }
 
+    public enum ElementType
+    {
+        Fire
+    }
+
+    public enum CastType
+    {
+        Explosion
+    }
+
 }
