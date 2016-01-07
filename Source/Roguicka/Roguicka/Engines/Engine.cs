@@ -6,18 +6,18 @@ using RogueSharp;
 using Roguicka.Actors;
 using Roguicka.Maps;
 
-namespace Roguicka
+namespace Roguicka.Engines
 {
-    class Engine
+    public class Engine
     {
         private List<IActor> _actors = new List<IActor>();
-        private readonly int CHASETURNS = 3;
+        private const int ChaseTurns = 3;
         private readonly RLRootConsole _rootConsole;
         private readonly IRoguickaMap _map;
         private int ScreenWidth { get; }
         private int ScreenHeight { get; }
         private string FontFile { get; }
-        private GameState gameState;
+        private GameState _gameState;
 
         public Engine(int width, int height, string file, IRoguickaMap map)
         {
@@ -27,7 +27,7 @@ namespace Roguicka
             _map = map;
 
             _rootConsole = new RLRootConsole(FontFile,ScreenWidth,ScreenHeight,8,8,1f,"RoguickaRL");
-            gameState = GameState.PlayerTurn;
+            _gameState = GameState.PlayerTurn;
         }
 
         public RLRootConsole RootConsole()
@@ -182,7 +182,7 @@ namespace Roguicka
             }
             if (newTurn)
             {
-                gameState = GameState.NewTurn;
+                _gameState = GameState.NewTurn;
                 MonsterMash();
             }
         }
@@ -212,11 +212,11 @@ namespace Roguicka
 
                 if (_map.GetCell(hero.X, hero.Y).IsInFov)
                 {
-                    monster.Chase = CHASETURNS;
+                    monster.Chase = ChaseTurns;
                     monster.Target = null;
                 }
             }
-            gameState = GameState.PlayerTurn;
+            _gameState = GameState.PlayerTurn;
         }
 
         private void MonsterMove(IActor sourceActor,int targetX, int targetY)

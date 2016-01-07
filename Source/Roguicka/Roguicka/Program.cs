@@ -1,6 +1,7 @@
 ﻿using RLNET;
 using RogueSharp;
 using Roguicka.Actors;
+using Roguicka.Engines;
 using Roguicka.Maps;
 
 namespace Roguicka
