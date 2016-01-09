@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using RLNET;
-using RogueSharp;
 using Roguicka.Actors;
 using Roguicka.Maps;
 
@@ -18,6 +17,7 @@ namespace Roguicka.Engines
         private int ScreenHeight { get; }
         private string FontFile { get; }
         private GameState _gameState;
+        private RenderingEngine _renderingEngine;
 
         public Engine(int width, int height, string file, IRoguickaMap map)
         {
@@ -28,6 +28,7 @@ namespace Roguicka.Engines
 
             _rootConsole = new RLRootConsole(FontFile,ScreenWidth,ScreenHeight,8,8,1f,"RoguickaRL");
             _gameState = GameState.PlayerTurn;
+            _renderingEngine = new RenderingEngine(_map,_rootConsole);
         }
 
         public RLRootConsole RootConsole()
@@ -64,60 +65,19 @@ namespace Roguicka.Engines
 
         private void OnRootConsoleRender(object sender, UpdateEventArgs e)
         {
+            
             var player = GetHero();
-            _rootConsole.Clear();
-            _map.ComputeFov(player.X, player.Y, player.LightRadius, true);
-
-            foreach (Cell cell in _map.GetAllCells())
-            {
-                SetCell(cell);
-            }
-
-            foreach (var monster in 
-                from monster in GetActors(ActorType.Monster)
-                let cell = _map.GetCell(monster.X, monster.Y)
-                where cell.IsInFov select monster)
-            {
-                _rootConsole.Set(monster.X, monster.Y, monster.Color, null, monster.Symbol);
-            }
-
-            _rootConsole.Set(player.X,player.Y,player.Color,null,player.Symbol);
-            _rootConsole.Draw();
-
-        }
-
-        private void SetCell(Cell cell)
-        {
-            if (cell.IsInFov)
-            {
-                _map.SetCellProperties(cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, true);
-                if (cell.IsWalkable)
-                {
-                    _rootConsole.Set(cell.X, cell.Y, RLColor.Gray, null, '.');
-                }
-                else
-                {
-                    _rootConsole.Set(cell.X, cell.Y, RLColor.LightGray, null, '#');
-                }
-            }
-            else if (cell.IsExplored)
-            {
-                if (cell.IsWalkable)
-                {
-                    _rootConsole.Set(cell.X, cell.Y, new RLColor(30, 30, 30), null, '.');
-                }
-                else
-                {
-                    _rootConsole.Set(cell.X, cell.Y, RLColor.Gray, null, '#');
-                }
-            }
+            _renderingEngine.ComputeFov(player);
+            _renderingEngine.UpdateExploredArea();
+            _renderingEngine.DrawVisibleActors(_actors);
+            _renderingEngine.DrawConsole();
         }
 
         private void OnRootConsoleUpdate(object sender, UpdateEventArgs e)
         {
-            var player = GetHero();
             var keyPress = _rootConsole.Keyboard.GetKeyPress();
             if (keyPress == null) return;
+            var player = GetHero();
             HandleInput(player,keyPress);
         }
 
