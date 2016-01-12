@@ -13,22 +13,17 @@ namespace Roguicka.Engines
         private const int ChaseTurns = 3;
         private readonly RLRootConsole _rootConsole;
         private readonly IRoguickaMap _map;
-        private int ScreenWidth { get; }
-        private int ScreenHeight { get; }
-        private string FontFile { get; }
         private GameState _gameState;
         private RenderingEngine _renderingEngine;
+        private LogicEngine _logicEngine;
 
         public Engine(int width, int height, string file, IRoguickaMap map)
         {
-            ScreenHeight = height;
-            ScreenWidth = width;
-            FontFile = file;
             _map = map;
-
-            _rootConsole = new RLRootConsole(FontFile,ScreenWidth,ScreenHeight,8,8,1f,"RoguickaRL");
+            _rootConsole = new RLRootConsole(file,width,height,8,8,1f,"RoguickaRL");
             _gameState = GameState.PlayerTurn;
             _renderingEngine = new RenderingEngine(_map,_rootConsole);
+            _logicEngine = new LogicEngine();
         }
 
         public RLRootConsole RootConsole()
