@@ -41,7 +41,8 @@ namespace Roguicka.Engines
             _rootConsole.Render += OnRootConsoleRender;
         }
 
-        private IEnumerable<IActor> GetActors(ActorType type) => _actors.Where(actor=> actor.Type == type);
+        private IEnumerable<IActor> GetActors(ActorType type) 
+            => _actors.Where(actor=> actor.Type == type);
 
         private IEnumerable<IActor> GetActors() => _actors;
 
@@ -73,59 +74,61 @@ namespace Roguicka.Engines
             var keyPress = _rootConsole.Keyboard.GetKeyPress();
             if (keyPress == null) return;
             var player = GetHero();
+            _logicEngine.Actors(_actors);
             HandleInput(player,keyPress);
         }
 
         private void HandleInput(IActor player, RLKeyPress keyPress)
         {
             bool newTurn = false;
-            int x;
-            int y;
+            int x = 0;
+            int y = 0;
+            char action='z';
             switch (keyPress.Key)
             {
                 case RLKey.Keypad8:
                 case RLKey.Up:
                     x = player.X;
                     y = player.Y - 1;
-                    newTurn = Move(player, x, y);
+                    action = 'm';
                     break;
                 case RLKey.Keypad2:
                 case RLKey.Down:
                     x = player.X;
                     y = player.Y + 1;
-                    newTurn = Move(player, x, y);
+                    action = 'm';
                     break;
                 case RLKey.Keypad4:
                 case RLKey.Left:
                     x = player.X-1;
                     y = player.Y;
-                    newTurn = Move(player, x, y);
+                    action = 'm';
                     break;
                 case RLKey.Keypad6:
                 case RLKey.Right:
                     x = player.X+1;
                     y = player.Y;
-                    newTurn = Move(player, x, y);
+                    action = 'm';
                     break;
                 case RLKey.Keypad7:
                     x = player.X-1;
                     y = player.Y-1;
-                    newTurn = Move(player, x, y);
+                    action = 'm';
                     break;
                 case RLKey.Keypad9:
                     x = player.X+1;
                     y = player.Y-1;
-                    newTurn = Move(player, x, y);
+                    action = 'm';
                     break;
                 case RLKey.Keypad1:
                     x = player.X-1;
                     y = player.Y+1;
-                    newTurn = Move(player, x, y);
+                    action = 'm';
                     break;
                 case RLKey.Keypad3:
                     x = player.X+1;
                     y = player.Y+1;
-                    newTurn = Move(player, x, y);
+                    action = 'm';
                     break;
                 case RLKey.Keypad5:
                     newTurn = true;
@@ -134,6 +137,10 @@ namespace Roguicka.Engines
                     GetHero().AddElement(new FireElement());
                     newTurn = true;
                     break;
+            }
+            if (action=='m')
+            {
+               newTurn = _logicEngine.Move(player, x, y, _map);
             }
             if (newTurn)
             {
@@ -188,20 +195,20 @@ namespace Roguicka.Engines
                 // Check for ability to move at diagonal
                 if (CanMove(sourceActor.X + dx, sourceActor.Y + dy))
                 {
-                    Move(sourceActor, sourceActor.X + dx, sourceActor.Y + dy);
+                    _logicEngine.Move(sourceActor, sourceActor.X + dx, sourceActor.Y + dy,_map);
                 }// Else, check for ability to move step DX
                 else if (CanMove(sourceActor.X + stepDx, sourceActor.Y))
                 {
-                    Move(sourceActor, sourceActor.X + stepDx, sourceActor.Y);
+                    _logicEngine.Move(sourceActor, sourceActor.X + stepDx, sourceActor.Y,_map);
                 }// Else, check for ability to move step DY
                 else if (CanMove(sourceActor.X, sourceActor.Y + stepDy))
                 {
-                    Move(sourceActor, sourceActor.X, sourceActor.Y + stepDy);
+                    _logicEngine.Move(sourceActor, sourceActor.X, sourceActor.Y + stepDy,_map);
                 }
             }
             else
             {
-                Move(sourceActor, sourceActor.X + dx, sourceActor.Y + dy);
+                _logicEngine.Move(sourceActor, sourceActor.X + dx, sourceActor.Y + dy,_map);
             }
         }
 
@@ -210,44 +217,13 @@ namespace Roguicka.Engines
             return _map.GetCell(x, y).IsWalkable;
         }
 
-        private bool Move(IActor actor, int newX, int newY)
-        {
-            bool turn = false;
-            if (_map.GetCell(newX, newY).IsWalkable)
-            {
-                if (CheckForBlock(newX, newY))
-                {
-                    var blocker = _actors.Find(blocked => blocked.X == newX && blocked.Y == newY) as IDestructible;
-                    blocker?.TakeDamage(10);
-                    turn = true;
-                }
-                else
-                {
-                    actor.X = newX;
-                    actor.Y = newY;
-                    turn = true;
-                }
-            }
-            return turn;
-        }
+        
 
         public void AddActor(IActor actor)
         {
             _actors.Add(actor);
         }
 
-        private bool CheckForBlock(int x, int y)
-        {
-            bool blocked = false;
-            foreach (var actor in GetActors())
-            {
-                if (actor.X == x && actor.Y == y && actor.Blocks)
-                {
-                    blocked = true;
-                }
-            }
-            
-            return blocked;
-        }
+
     }
 }
