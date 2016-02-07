@@ -83,5 +83,31 @@ namespace Roguicka.Tests.Actors.Tests
 
             Assert.False(sut.Blocks);
         }
+
+        [Fact]
+        public void ShouldBeAMonster()
+        {
+            var sut = new Monster();
+            Assert.Equal(ActorType.Monster,sut.Type);
+        }
+
+        [Fact]
+        public void ShouldHaveColor()
+        {
+            var sut = new Monster();
+            Assert.NotNull(sut.Color);
+        }
+
+        [Theory]
+        [InlineData(10,1,11)]
+        [InlineData(10,10,10)]
+        [InlineData(1,50,10)]
+        [InlineData(1,-1,1)]
+        public void ShouldHealCorrectAmount(int hp, int heal, int result)
+        {
+            var sut = new Monster(hp,result,1,1,RLColor.Green, 'M');
+            sut.Heal(heal);
+            Assert.Equal(result,sut.CurrentHp);
+        }
     }
 }

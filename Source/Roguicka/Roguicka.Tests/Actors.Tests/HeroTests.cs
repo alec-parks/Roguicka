@@ -42,5 +42,62 @@ namespace Roguicka.Tests.Actors.Tests
             sut.Heal(heal);
             Assert.Equal(max,sut.CurrentHp);
         }
+
+        [Theory]
+        [InlineData(1, -1, 1)]
+        public void ShouldNotHealNegativeValues(int start, int heal, int result)
+        {
+            var sut = new Hero(1, 1, start, result, '@');
+            sut.Heal(heal);
+            Assert.Equal(result,sut.CurrentHp);
+        }
+
+        [Fact]
+        public void ShouldBeHero()
+        {
+            var sut = new Hero();
+            Assert.Equal(ActorType.Player,sut.Type);
+        }
+
+        [Fact]
+        public void ShouldBlock()
+        {
+            var sut = new Hero();
+            Assert.True(sut.Blocks);
+        }
+
+        [Fact]
+        public void ShouldHaveColor()
+        {
+            var sut = new Hero();
+            Assert.NotNull(sut.Color);
+        }
+
+        [Fact]
+        public void ShouldHaveSymbol()
+        {
+            var sut = new Hero();
+            Assert.Equal('@',sut.Symbol);
+        }
+
+        [Fact]
+        public void ShouldHaveLight()
+        {
+            var sut = new Hero();
+            Assert.InRange(sut.LightRadius,1,50);
+        }
+
+        [Theory]
+        [InlineData(10, 1, 9)]
+        [InlineData(10, 0, 10)]
+        [InlineData(10, 10, 0)]
+        [InlineData(10, 60, -50)]
+        [InlineData(10, -60, 10)]
+        public void ShouldTakeDamage(int hp, int dam, int result)
+        {
+            var sut = new Hero(1,1,hp,hp,'@');
+            sut.TakeDamage(dam);
+            Assert.Equal(result,sut.CurrentHp);
+        }
     }
 }

@@ -17,6 +17,16 @@ namespace Roguicka.Actors
         public bool IsDead => CurrentHp <= 0;
         public Cell Target { get; set; }
 
+        public Monster()
+        {
+            CurrentHp = 1;
+            MaxHp = 1;
+            X = 1;
+            Y = 1;
+            Color = RLColor.Green;
+            Symbol = 'M';
+        }
+
         public Monster(int currentHp, int maxHp, int xPos, int yPos, RLColor color, char symbol)
         {
             CurrentHp = currentHp;
@@ -38,11 +48,11 @@ namespace Roguicka.Actors
 
         public void Heal(int amount)
         {
-            if (amount > MaxHp)
+            if (amount+CurrentHp > MaxHp)
             {
                 CurrentHp = MaxHp;
             }
-            else
+            else if(amount >=0)
             {
                 CurrentHp += amount;
             }

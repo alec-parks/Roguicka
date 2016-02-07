@@ -18,6 +18,15 @@ namespace Roguicka.Actors
         public bool IsDead => CurrentHp <= 0;
         private List<IElement> Elements { get; } = new List<IElement>();
 
+        public Hero()
+        {
+            X = 1;
+            Y = 1;
+            CurrentHp = 1;
+            MaxHp = 1;
+            Symbol = '@';
+        }
+
         public Hero(int xPos, int yPos, int currentHp, int maxHp, char symbol)
         {
             X = xPos;
@@ -29,7 +38,11 @@ namespace Roguicka.Actors
 
         public void TakeDamage(int amount)
         {
-            CurrentHp -= amount;
+            if (amount >= 0)
+            {
+                CurrentHp -= amount;
+            }
+            
         }
 
         public void Heal(int amount)
@@ -38,7 +51,7 @@ namespace Roguicka.Actors
             {
                 CurrentHp = MaxHp;
             }
-            else
+            else if (amount >= 0)
             {
                 CurrentHp += amount;
             }
