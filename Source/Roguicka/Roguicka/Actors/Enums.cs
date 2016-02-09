@@ -10,10 +10,4 @@
     {
         Fire
     }
-
-    public enum CastType
-    {
-        Explosion
-    }
-
 }

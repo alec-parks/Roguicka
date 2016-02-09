@@ -63,7 +63,7 @@ namespace Roguicka.Engines
         public void DrawVisibleActors(IEnumerable<IActor> actors)
         {
             foreach (var actor in
-                from actor in actors
+                from actor in actors.OrderByDescending(actor => actor.Type)
                 let cell = _map.GetCell(actor.X, actor.Y)
                 where cell.IsInFov
                 select actor)

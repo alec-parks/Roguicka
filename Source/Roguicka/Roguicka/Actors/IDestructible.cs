@@ -2,8 +2,8 @@
 {
     public interface IDestructible
     {
-        int CurrentHp { get; set; }
-        int MaxHp { get; set; }
+        int CurrentHp { get; }
+        int MaxHp { get; }
         bool IsDead { get; }
 
         void TakeDamage(int amount);
