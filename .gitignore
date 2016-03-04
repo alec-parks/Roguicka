@@ -5,6 +5,7 @@
 *.suo
 *.user
 *.sln.docstates
+*.sln.iml
 
 # Build results
 [Dd]ebug/
@@ -20,6 +21,7 @@ bld/
 
 # Roslyn cache directories
 *.ide/
+*.idea/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
