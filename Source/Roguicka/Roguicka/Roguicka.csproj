@@ -53,6 +53,7 @@
     <Compile Include="Engines\Engine.cs" />
     <Compile Include="Engines\LogicEngine.cs" />
     <Compile Include="Engines\RenderingEngine.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="GlobalEnums.cs" />
     <Compile Include="Maps\IRoguickaMap.cs" />
     <Compile Include="Program.cs" />
