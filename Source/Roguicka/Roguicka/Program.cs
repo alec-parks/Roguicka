@@ -15,8 +15,9 @@ namespace Roguicka
         public static void Main (string[] args)
 		{
             _map = new RoguickaMap(Map.Create(new CaveMapCreationStrategy<Map>(ScreenWidth,ScreenHeight,45,4,3) ));
-            string FontFileName = @"C:\projects\Roguicka\Source\Roguicka\Roguicka\Fonts\terminal8x8.png";
-            Engine engine = new Engine(ScreenWidth,ScreenHeight,FontFileName,_map);
+            Game.Instance.Map = _map;
+            string FontFileName = @"Fonts\terminal8x8.png";
+            Engine engine = new Engine(ScreenWidth,ScreenHeight,FontFileName);
             Hero player = new Hero(25,25,30,30,'@');
             Monster mob = new Monster(5,5,10,15,RLColor.Green,'T');
             engine.AddActor(player);

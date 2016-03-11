@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using RLNET;
 using Roguicka.Actors;
-using Roguicka.Maps;
+
 
 namespace Roguicka.Engines
 {
@@ -12,17 +12,15 @@ namespace Roguicka.Engines
         private List<IActor> _actors = new List<IActor>();
         private const int ChaseTurns = 3;
         private readonly RLRootConsole _rootConsole;
-        private readonly IRoguickaMap _map;
         private GameState _gameState;
         private RenderingEngine _renderingEngine;
         private LogicEngine _logicEngine;
 
-        public Engine(int width, int height, string file, IRoguickaMap map)
+        public Engine(int width, int height, string file)
         {
-            _map = map;
             _rootConsole = new RLRootConsole(file,width,height,8,8,1f,"RoguickaRL");
             _gameState = GameState.PlayerTurn;
-            _renderingEngine = new RenderingEngine(_map,_rootConsole);
+            _renderingEngine = new RenderingEngine(Game.Instance.Map,_rootConsole);
             _logicEngine = new LogicEngine();
         }
 
@@ -140,7 +138,7 @@ namespace Roguicka.Engines
             }
             if (action=='m')
             {
-               newTurn = _logicEngine.Move(player, x, y, _map);
+               newTurn = _logicEngine.Move(player, x, y, Game.Instance.Map);
             }
             if (newTurn)
             {
@@ -155,7 +153,7 @@ namespace Roguicka.Engines
             
             foreach (var monster in GetDestructible(ActorType.Monster).Where(monster=>!monster.IsDead).Cast<Monster>())
             {
-                _map.ComputeFov(monster.X, monster.Y, 5, true);
+                Game.Instance.Map.ComputeFov(monster.X, monster.Y, 5, true);
                 if (monster.Chase > 0)
                 {
                     MonsterMove(monster,hero.X,hero.Y);
@@ -163,7 +161,7 @@ namespace Roguicka.Engines
                 }
                 else if (monster.Target == null)
                 {
-                    monster.Target = _map.GetRandomCell();
+                    monster.Target = Game.Instance.Map.GetRandomCell();
                     //Do the Move
                     MonsterMove(monster, monster.Target.X, monster.Target.Y);
                 }
@@ -172,7 +170,7 @@ namespace Roguicka.Engines
                     MonsterMove(monster, monster.Target.X, monster.Target.Y);
                 }
 
-                if (_map.GetCell(hero.X, hero.Y).IsInFov)
+                if (Game.Instance.Map.GetCell(hero.X, hero.Y).IsInFov)
                 {
                     monster.Chase = ChaseTurns;
                     monster.Target = null;
@@ -195,26 +193,26 @@ namespace Roguicka.Engines
                 // Check for ability to move at diagonal
                 if (CanMove(sourceActor.X + dx, sourceActor.Y + dy))
                 {
-                    _logicEngine.Move(sourceActor, sourceActor.X + dx, sourceActor.Y + dy,_map);
+                    _logicEngine.Move(sourceActor, sourceActor.X + dx, sourceActor.Y + dy,Game.Instance.Map);
                 }// Else, check for ability to move step DX
                 else if (CanMove(sourceActor.X + stepDx, sourceActor.Y))
                 {
-                    _logicEngine.Move(sourceActor, sourceActor.X + stepDx, sourceActor.Y,_map);
+                    _logicEngine.Move(sourceActor, sourceActor.X + stepDx, sourceActor.Y,Game.Instance.Map);
                 }// Else, check for ability to move step DY
                 else if (CanMove(sourceActor.X, sourceActor.Y + stepDy))
                 {
-                    _logicEngine.Move(sourceActor, sourceActor.X, sourceActor.Y + stepDy,_map);
+                    _logicEngine.Move(sourceActor, sourceActor.X, sourceActor.Y + stepDy,Game.Instance.Map);
                 }
             }
             else
             {
-                _logicEngine.Move(sourceActor, sourceActor.X + dx, sourceActor.Y + dy,_map);
+                _logicEngine.Move(sourceActor, sourceActor.X + dx, sourceActor.Y + dy,Game.Instance.Map);
             }
         }
 
         private bool CanMove(int x, int y)
         {
-            return _map.GetCell(x, y).IsWalkable;
+            return Game.Instance.Map.GetCell(x, y).IsWalkable;
         }
 
         
