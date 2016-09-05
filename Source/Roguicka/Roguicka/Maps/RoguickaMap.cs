@@ -65,8 +65,8 @@ namespace Roguicka.Maps
             DotNetRandom dnr = new DotNetRandom();
             do
             {
-                var x = dnr.Next(Width);
-                var y = dnr.Next(Height);
+                var x = dnr.Next(Width - 1);
+                var y = dnr.Next(Height - 1);
                 cell = _map.GetCell(x, y);
             } while (!cell.IsWalkable);
             return cell;

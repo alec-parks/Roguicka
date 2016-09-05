@@ -1,11 +1,14 @@
 ﻿using RLNET;
 using RogueSharp;
+using Roguicka.Engines;
+using Roguicka.Interact;
 
 namespace Roguicka.Actors
 {
     public class Monster: IActor, IDestructible
     {
         public ActorType Type { get; } = ActorType.Monster;
+        public Stats Stats { get; set; }
         public int CurrentHp { get; set; }
         public int MaxHp { get; set; }
         public int X { get; set; }
@@ -19,12 +22,13 @@ namespace Roguicka.Actors
 
         public Monster()
         {
-            CurrentHp = 1;
-            MaxHp = 1;
+            CurrentHp = 100;
+            MaxHp = 100;
             X = 1;
             Y = 1;
             Color = RLColor.Green;
             Symbol = 'M';
+            Stats = new Stats(1, 1, 1, 1, 1, 1, 1);
         }
 
         public Monster(int currentHp, int maxHp, int xPos, int yPos, RLColor color, char symbol)
@@ -35,6 +39,7 @@ namespace Roguicka.Actors
             Y = yPos;
             Color = color;
             Symbol = symbol;
+            Stats = new Stats(5, 5, 10, 3, 10, 10, 1);
         }
 
         public void TakeDamage(int amount)
@@ -60,8 +65,10 @@ namespace Roguicka.Actors
 
         private void SetDead()
         {
-            Symbol = '%';
+            
             Blocks = false;
+            InteractStack.Push(new DeathEvent(Engine.GetHero(), this));
+            Symbol = '%';
         }
     }
 }
