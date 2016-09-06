@@ -18,12 +18,11 @@ namespace Roguicka.Interact {
         }
 
         public override void Trigger() {
-            if (DeadActor.Type == ActorType.Monster && DeadActor.Stats.Exp != 0) {
+            if (DeadActor.Type == ActorType.Monster && DeadActor.Stats.Exp != -1) {
                 LiveActor.Stats.Gold += DeadActor.Stats.Gold;
                 LiveActor.Stats.Exp += DeadActor.Stats.Exp;
                 Messages[0] = "\nYou gained " + DeadActor.Stats.Gold + " gold and " + DeadActor.Stats.Exp + " xp";
                 Messages[1] = "Total gold: " + LiveActor.Stats.Gold + " Total xp: " + LiveActor.Stats.Exp + '\n';
-                DeadActor.Stats.Gold = DeadActor.Stats.Exp = 0;
                 DeadActor = null;
                 LevelUpHelper.CheckLeveledUp(LiveActor);
 
