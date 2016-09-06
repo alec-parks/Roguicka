@@ -25,7 +25,7 @@ namespace Roguicka.Interact {
 
                 var coord = Game.Instance.Map.GetFreeRandomCoord();
                 //Monster type doesn't work yet
-                Monster m = MonsterGenerator.MakeMonsterOfLevel(2, EMonsterType.Goblin);
+                Monster m = MonsterGenerator.MakeMonsterOfLevel(1, EMonsterType.Goblin);
                 Engine.AddActor(m);
             }
         }
