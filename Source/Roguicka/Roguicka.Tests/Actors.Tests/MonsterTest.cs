@@ -9,7 +9,7 @@ namespace Roguicka.Tests.Actors.Tests
         [Fact]
         public void DeathShouldChangeSymbol()
         {
-            var sut = new Monster(1, 1, 1, 1, RLColor.Green, 'T');
+            var sut = new Monster();
 
             sut.TakeDamage(10);
 
@@ -22,7 +22,7 @@ namespace Roguicka.Tests.Actors.Tests
         [InlineData(10, 1, 9)]
         public void ShouldTakeDamage(int hp, int damage, int result)
         {
-            var sut = new Monster(hp, hp, 1, 1, RLColor.Black, 'D');
+            var sut = new Monster(hp, 1, 1, RLColor.Black, 'D', true);
 
             sut.TakeDamage(damage);
 
@@ -34,7 +34,7 @@ namespace Roguicka.Tests.Actors.Tests
         [InlineData(1, 20)]
         public void ShouldBeDead(int hp, int damage)
         {
-            var sut = new Monster(hp, hp, 1, 1, RLColor.Black, 'D');
+            var sut = new Monster(hp, 1, 1, RLColor.Black, 'D', true);
 
             sut.TakeDamage(damage);
 
@@ -46,7 +46,7 @@ namespace Roguicka.Tests.Actors.Tests
         {
             for (int i = 1; i < 1000; i++)
             {
-                var sut = new Monster(i, i, 1, 1, RLColor.Black, 'D');
+                var sut = new Monster(i, 1, 1, RLColor.Black, 'D', true);
                 Assert.False(sut.IsDead);
             }
         }
@@ -56,7 +56,10 @@ namespace Roguicka.Tests.Actors.Tests
         [InlineData(10, 10, 20)]
         public void ShouldHeal(int hp, int heal, int result)
         {
-            var sut = new Monster(hp, result, 1, 1, RLColor.Black, 'D');
+            var sut = new Monster(result, 1, 1, RLColor.Black, 'D', true);
+
+            sut.TakeDamage(result-hp);
+
             sut.Heal(heal);
 
             Assert.Equal(result, sut.CurrentHp);
@@ -67,7 +70,9 @@ namespace Roguicka.Tests.Actors.Tests
         [InlineData(10, 10000000, 10)]
         public void ShouldNotHealAboveMax(int hp, int heal, int result)
         {
-            var sut = new Monster(hp, result, 1, 1, RLColor.Black, 'D');
+            var sut = new Monster(result, 1, 1, RLColor.Black, 'D', true);
+
+            sut.CurrentHp = hp;
 
             sut.Heal(heal);
 
@@ -77,7 +82,7 @@ namespace Roguicka.Tests.Actors.Tests
         [Fact]
         public void DyingShouldUnblock()
         {
-            var sut = new Monster(10, 10, 1, 1, RLColor.Black, 'D');
+            var sut = new Monster();
 
             sut.TakeDamage(20);
 
@@ -105,7 +110,7 @@ namespace Roguicka.Tests.Actors.Tests
         [InlineData(1,-1,1)]
         public void ShouldHealCorrectAmount(int hp, int heal, int result)
         {
-            var sut = new Monster(hp,result,1,1,RLColor.Green, 'M');
+            var sut = new Monster(result, 1, 1, RLColor.Green, 'M', true) {CurrentHp = hp};
             sut.Heal(heal);
             Assert.Equal(result,sut.CurrentHp);
         }

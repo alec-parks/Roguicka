@@ -50,6 +50,7 @@
     <Compile Include="Actors\IDestructible.cs" />
     <Compile Include="Actors\IElement.cs" />
     <Compile Include="Actors\Monster.cs" />
+    <Compile Include="Actors\Player.cs" />
     <Compile Include="Engines\Engine.cs" />
     <Compile Include="Engines\LoggingEngine.cs" />
     <Compile Include="Engines\LogicEngine.cs" />

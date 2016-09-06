@@ -20,7 +20,7 @@ namespace Roguicka
 			string FontFileName = @"Fonts"+ DirectorySeparatorChar + "terminal8x8.png";
             Engine engine = new Engine(ScreenWidth,ScreenHeight,FontFileName);
             Hero player = new Hero(25,25,30,30,'@');
-            Monster mob = new Monster(5,5,10,15,RLColor.Green,'T');
+            Monster mob = new Monster(5,10,15,RLColor.Green,'T',true);
             engine.AddActor(player);
             engine.AddActor(mob);
             engine.Update();
