@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 namespace Roguicka.Helpers {
     public static class LevelUpHelper {
 
+        
         public static int XpRequirement(int level) {
-            return (int)(4 * (Math.Pow(level,3)));
+            return (int)(4 * (Math.Pow(level,3)) / 2);
         }
 
         public static void CheckLeveledUp(IActor actor) {

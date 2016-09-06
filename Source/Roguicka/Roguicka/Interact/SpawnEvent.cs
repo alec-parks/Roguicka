@@ -18,6 +18,9 @@ namespace Roguicka.Interact {
         //Change so theres multiple ways of spawning
         public SpawnEvent(int spawnCount) {
             SpawnCount = spawnCount;
+            Messages[0] = Spacer;
+            Messages[1] = "Spawning: " + spawnCount + " enemies";
+            Messages[2] = Spacer;
         }
 
         public override void Trigger() {
@@ -25,7 +28,7 @@ namespace Roguicka.Interact {
 
                 var coord = Game.Instance.Map.GetFreeRandomCoord();
                 //Monster type doesn't work yet
-                Monster m = MonsterGenerator.MakeMonsterOfLevel(1, EMonsterType.Goblin);
+                Monster m = MonsterGenerator.MakeRandomMonster(1);
                 Engine.AddActor(m);
             }
         }

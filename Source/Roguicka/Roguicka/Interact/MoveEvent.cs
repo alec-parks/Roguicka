@@ -54,7 +54,6 @@ namespace Roguicka.Interact {
                     //if (Actor.Type == ActorType.Player) {
                     var blocker = LogicEngine._actors.First(blocked => blocked.X == newX && blocked.Y == newY && blocked is IDestructible) as IActor;
                     if (blocker.Type != Actor.Type) {
-                       
                         InteractStack.Push(new FightEvent(Actor, (IDestructible)blocker, EFightEvent.Hit));
                     }
                     //}

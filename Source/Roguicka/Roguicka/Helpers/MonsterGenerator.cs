@@ -13,16 +13,16 @@ namespace Roguicka.Helpers {
     public enum EMonsterType {
         Goblin = 'G',
         Elf = 'E',
-        Troll = 'T' ,
+        Troll = 'T',
         Wizard = 'W',
         Rat = 'R'
     }
 
-    
+
 
     public static class MonsterGenerator {
 
-        static DotNetRandom random = new DotNetRandom();
+        public static DotNetRandom random = new DotNetRandom();
 
         public static Dictionary<EMonsterType, Stats> Beastiary = new Dictionary<EMonsterType, Stats>() {
             { EMonsterType.Goblin, new Stats(3,3,10,4,5,5,1) },
@@ -32,27 +32,29 @@ namespace Roguicka.Helpers {
             { EMonsterType.Wizard, new Stats(4,4,10,7,0,15,1) }
         };
 
-        static string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        //static string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        public static Monster MakeMonsterOfLevel(int level, EMonsterType e) {
+        public static Monster MakeMonster(int level, EMonsterType e) {
             var coord = Game.Instance.Map.GetFreeRandomCoord();
+            Monster monster = new Monster(50, 50, coord.Item1, coord.Item2, RLColor.Red, (char)e);
 
-            var enemies = Beastiary.Values.ToList();
-            var enemyType = Beastiary.Keys.ToList();
-
-            int place = random.Next(enemyType.Count() - 1);
-
-            Monster monster = new Monster( 50, 50, coord.Item1,coord.Item2, RLColor.Red, (char) enemyType[place]);
-            
-            monster.Stats = enemies[place];
+            monster.Stats = Beastiary[e];
             for (int i = 0; i < level - 1; i++) {
                 LevelUpEvent l = new LevelUpEvent(monster);
                 //Now THAT'S what I call a hack
                 l.random = random;
                 InteractStack.Push(l);
             }
-            
+
             return monster;
+        }
+
+        public static Monster MakeRandomMonster(int level) {
+            var enemies = Beastiary.Values.ToList();
+            var enemyType = Beastiary.Keys.ToList();
+
+            int place = random.Next(enemyType.Count() - 1);
+            return MakeMonster(level, enemyType[place]);
         }
 
     }

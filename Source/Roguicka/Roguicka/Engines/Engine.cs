@@ -130,6 +130,9 @@ namespace Roguicka.Engines {
                     GetHero().AddElement(new FireElement());
 
                     break;
+                case RLKey.Space:
+                    InteractStack.Push(new SpawnEvent(10));
+                    break;
             }
             //_gameState = GameState.NewTurn;
             //MonsterMash();
