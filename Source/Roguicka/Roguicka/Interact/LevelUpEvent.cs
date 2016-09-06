@@ -10,23 +10,28 @@ namespace Roguicka.Interact {
     class LevelUpEvent : InteractEvent {
 
         IActor Actor;
-        DotNetRandom random;
+        public DotNetRandom random;
 
         public LevelUpEvent(IActor actor) {
             Actor = actor;
             random = new DotNetRandom();
+            
         }
 
         public override void Trigger() {
-            Actor.Stats.Attack += random.Next(6);
+            Actor.Stats.Attack += random.Next(1,6);
             Actor.Stats.Defense += random.Next(6);
             //Actor.Stats.NeededEnergy += random.Next(6);
-            Actor.Stats.Exp = 0;
+            
             Actor.Stats.Level++;
-            Messages[0] = "\nLevel up to lvl: " + Actor.Stats.Level;
-            Messages[1] = "Attack: " + Actor.Stats.Attack;
-            Messages[2] = "Defense: " + Actor.Stats.Defense;
-            //Messages[3] = "Speed: " + Actor.Stats.Speed + "\n";
+            //Prevent showing when enemies level up
+            if (Actor.Type == ActorType.Player) {
+                Actor.Stats.Exp = 0;
+                Messages[0] = "\nLevel up to lvl: " + Actor.Stats.Level;
+                Messages[1] = "Attack: " + Actor.Stats.Attack;
+                Messages[2] = "Defense: " + Actor.Stats.Defense + "\n";
+                //Messages[3] = "Speed: " + Actor.Stats.Speed + "\n";
+            }
         }
 
     }

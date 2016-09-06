@@ -2,6 +2,7 @@
 using RogueSharp.Random;
 using Roguicka.Actors;
 using Roguicka.Engines;
+using Roguicka.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,14 +22,10 @@ namespace Roguicka.Interact {
 
         public override void Trigger() {
             for (int i = 0; i < SpawnCount; i++) {
-                
-                int x = random.Next(Game.Instance.Map.Width - 1);
-                int y = random.Next(Game.Instance.Map.Height - 1);
-                while (!Game.Instance.Map.IsWalkable(x,y)) {
-                    x = random.Next(Game.Instance.Map.Width - 1);
-                    y = random.Next(Game.Instance.Map.Height - 1);
-                }
-                Monster m = new Monster(50, 50, x, y, RLColor.Green, 'T');
+
+                var coord = Game.Instance.Map.GetFreeRandomCoord();
+                //Monster type doesn't work yet
+                Monster m = MonsterGenerator.MakeMonsterOfLevel(2, EMonsterType.Goblin);
                 Engine.AddActor(m);
             }
         }

@@ -70,8 +70,8 @@ namespace Roguicka.Engines {
             if (_rootConsole.Mouse.GetLeftClick()) {
                 int x = _rootConsole.Mouse.X;
                 int y = _rootConsole.Mouse.Y;
-                IActor actor = GetActorAt(x, y);
-                Console.WriteLine(actor.Description);
+                //IActor actor = GetActorAt(x, y);
+                //Console.WriteLine(actor.Description);
             }
             
             var player = GetHero();

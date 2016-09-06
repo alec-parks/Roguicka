@@ -21,8 +21,7 @@ namespace Roguicka.Interact {
             if (DeadActor.Type == ActorType.Monster && DeadActor.Stats.Exp != 0) {
                 LiveActor.Stats.Gold += DeadActor.Stats.Gold;
                 LiveActor.Stats.Exp += DeadActor.Stats.Exp;
-                
-                Messages[0] = "You gained " + DeadActor.Stats.Gold + " gold and " + DeadActor.Stats.Exp + " xp";
+                Messages[0] = "\nYou gained " + DeadActor.Stats.Gold + " gold and " + DeadActor.Stats.Exp + " xp";
                 Messages[1] = "Total gold: " + LiveActor.Stats.Gold + " Total xp: " + LiveActor.Stats.Exp;
                 DeadActor.Stats.Gold = DeadActor.Stats.Exp = 0;
                 DeadActor = null;
