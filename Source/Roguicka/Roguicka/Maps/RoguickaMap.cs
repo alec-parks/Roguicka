@@ -72,6 +72,8 @@ namespace Roguicka.Maps
             return cell;
         }
 
+        
+
         public int Width => _map.Width;
         public int Height => _map.Height;
 

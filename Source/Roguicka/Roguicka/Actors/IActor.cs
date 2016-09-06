@@ -34,5 +34,6 @@ namespace Roguicka.Actors
         bool Blocks { get; }
         RLColor Color { get; }
         char Symbol { get; }
+        string Description { get; }
     }
 }

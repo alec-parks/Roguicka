@@ -14,6 +14,8 @@ namespace Roguicka.Engines {
         private RenderingEngine _renderingEngine;
         private LogicEngine _logicEngine;
 
+        private bool _leftPressed;
+        private bool _leftReleased;
         public Engine(int width, int height, string file) {
             _rootConsole = new RLRootConsole(file, width, height, 8, 8, 1f, "RoguickaRL");
             _gameState = GameState.PlayerTurn;
@@ -61,10 +63,22 @@ namespace Roguicka.Engines {
 
         private void OnRootConsoleUpdate(object sender, UpdateEventArgs e) {
             var keyPress = _rootConsole.Keyboard.GetKeyPress();
+
+            
+
+            //Get info at event
+            if (_rootConsole.Mouse.GetLeftClick()) {
+                int x = _rootConsole.Mouse.X;
+                int y = _rootConsole.Mouse.Y;
+                IActor actor = GetActorAt(x, y);
+                Console.WriteLine(actor.Description);
+            }
             
             var player = GetHero();
             _logicEngine.Actors(_actors);
+            //Add energy to hero
             player.Stats.Energy += player.Stats.EnergyGain;
+            //If we have enough energy, attack and reset. Same for monsters
             if (player.Stats.Energy >= player.Stats.NeededEnergy) {
                 if (keyPress != null) {
                     HandleInput(player, keyPress);
@@ -84,38 +98,30 @@ namespace Roguicka.Engines {
                 case RLKey.Keypad8:
                 case RLKey.Up:
                     InteractStack.Push(new MoveEvent(player, Game.Instance.Map, false, EMoveEvent.MoveUp));
-
                     break;
                 case RLKey.Keypad2:
                 case RLKey.Down:
                     InteractStack.Push(new MoveEvent(player, Game.Instance.Map, false, EMoveEvent.MoveDown));
-
                     break;
                 case RLKey.Keypad4:
                 case RLKey.Left:
                     InteractStack.Push(new MoveEvent(player, Game.Instance.Map, false, EMoveEvent.MoveLeft));
-
                     break;
                 case RLKey.Keypad6:
                 case RLKey.Right:
                     InteractStack.Push(new MoveEvent(player, Game.Instance.Map, false, EMoveEvent.MoveRight));
-
                     break;
                 case RLKey.Keypad7:
                     InteractStack.Push(new MoveEvent(player, Game.Instance.Map, false, EMoveEvent.MoveUL));
-
                     break;
                 case RLKey.Keypad9:
                     InteractStack.Push(new MoveEvent(player, Game.Instance.Map, false, EMoveEvent.MoveUR));
-
                     break;
                 case RLKey.Keypad1:
                     InteractStack.Push(new MoveEvent(player, Game.Instance.Map, false, EMoveEvent.MoveDL));
-
                     break;
                 case RLKey.Keypad3:
                     InteractStack.Push(new MoveEvent(player, Game.Instance.Map, false, EMoveEvent.MoveDR));
-
                     break;
                 case RLKey.Keypad5:
 
@@ -191,6 +197,9 @@ namespace Roguicka.Engines {
             return Game.Instance.Map.GetCell(x, y).IsWalkable;
         }
 
+        public static IActor GetActorAt(int x, int y) {
+            return _actors.Single(a => a.X == x && a.Y == y);
+        }
 
 
         public static void AddActor(IActor actor) {

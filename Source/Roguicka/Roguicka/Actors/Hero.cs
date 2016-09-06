@@ -18,6 +18,7 @@ namespace Roguicka.Actors
         public int LightRadius { get; } = 10;
         public bool IsDead => CurrentHp <= 0;
         private List<IElement> Elements { get; } = new List<IElement>();
+        public string Description { get; set; }
 
         public Hero()
         {

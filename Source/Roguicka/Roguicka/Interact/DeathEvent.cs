@@ -25,6 +25,7 @@ namespace Roguicka.Interact {
                 Messages[0] = "You gained " + DeadActor.Stats.Gold + " gold and " + DeadActor.Stats.Exp + " xp";
                 Messages[1] = "Total gold: " + LiveActor.Stats.Gold + " Total xp: " + LiveActor.Stats.Exp;
                 DeadActor.Stats.Gold = DeadActor.Stats.Exp = 0;
+                DeadActor = null;
                 LevelUpHelper.CheckLeveledUp(LiveActor);
 
                 
