@@ -3,6 +3,7 @@ using RogueSharp;
 using Roguicka.Actors;
 using Roguicka.Engines;
 using Roguicka.Maps;
+using static System.IO.Path;
 
 namespace Roguicka
 {
@@ -16,7 +17,7 @@ namespace Roguicka
 		{
             _map = new RoguickaMap(Map.Create(new CaveMapCreationStrategy<Map>(ScreenWidth,ScreenHeight,45,4,3) ));
             Game.Instance.Map = _map;
-            string FontFileName = @"Fonts\terminal8x8.png";
+			string FontFileName = @"Fonts"+ DirectorySeparatorChar + "terminal8x8.png";
             Engine engine = new Engine(ScreenWidth,ScreenHeight,FontFileName);
             Hero player = new Hero(25,25,30,30,'@');
             Monster mob = new Monster(5,5,10,15,RLColor.Green,'T');
