@@ -4,10 +4,10 @@ using Roguicka.Helpers;
 namespace Roguicka.Interact {
     public class DeathEvent : InteractEvent {
 
-        IActor DeadActor;
-        IActor LiveActor;
+        Player DeadActor;
+        Player LiveActor;
 
-        public DeathEvent(IActor liveActor, IActor deadActor) {
+        public DeathEvent(Player liveActor, Player deadActor) {
             LiveActor = liveActor;
             DeadActor = deadActor;
         }

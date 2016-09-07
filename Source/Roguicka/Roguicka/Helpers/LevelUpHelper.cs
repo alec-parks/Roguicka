@@ -10,7 +10,7 @@ namespace Roguicka.Helpers {
             return (int)(4 * (Math.Pow(level,3)) / 2);
         }
 
-        public static void CheckLeveledUp(IActor actor) {
+        public static void CheckLeveledUp(Player actor) {
             if (actor.Stats.Exp > XpRequirement(actor.Stats.Level)) {
                 InteractStack.Push(new LevelUpEvent(actor));
             }

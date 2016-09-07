@@ -60,12 +60,12 @@ namespace Roguicka.Engines
             }
         }
 
-        public void DrawVisibleActors(IEnumerable<IActor> actors)
+        public void DrawVisiblePlayers(IEnumerable<Player> actors)
         {
             foreach (var actor in
-                from actor in actors.OrderBy(actor => actor.Type)
+                from actor in actors.OrderBy(actor => actor.CurrentHp)
                 let cell = _map.GetCell(actor.X, actor.Y)
-                where cell.IsInFov
+                where cell.IsInFov && ( actor.Type == ActorType.Player || actor.Type == ActorType.Monster )
                 select actor)
             {
                 _rlConsole.Set(actor.X, actor.Y, actor.Color, null, actor.Symbol);

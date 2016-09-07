@@ -57,7 +57,8 @@ namespace Roguicka.Engines {
             var player = GetHero();
             _renderingEngine.ComputeFov(player);
             _renderingEngine.UpdateExploredArea();
-            _renderingEngine.DrawVisibleActors(_actors);
+            var _players = _actors.Where(x => x.Type == ActorType.Player || x.Type == ActorType.Monster).Cast<Player>().ToList();
+            _renderingEngine.DrawVisiblePlayers(_players);
             _renderingEngine.DrawConsole();
         }
 
@@ -93,7 +94,7 @@ namespace Roguicka.Engines {
             InteractStack.ExecuteStack();
         }
 
-        private void HandleInput(IActor player, RLKeyPress keyPress) {
+        private void HandleInput(Player player, RLKeyPress keyPress) {
             switch (keyPress.Key) {
                 case RLKey.Keypad8:
                 case RLKey.Up:
@@ -169,7 +170,7 @@ namespace Roguicka.Engines {
             _gameState = GameState.PlayerTurn;
         }
 
-        private void MonsterMove(IActor sourceActor, int targetX, int targetY) {
+        private void MonsterMove(Player sourceActor, int targetX, int targetY) {
             int dx = targetX - sourceActor.X;
             int dy = targetY - sourceActor.Y;
             int stepDx = (dx > 0 ? 1 : -1);

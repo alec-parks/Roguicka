@@ -20,7 +20,7 @@ namespace Roguicka.Interact {
 
         EMoveEvent[] MovementTypes;
 
-        IActor Actor;
+        Player Actor;
         IRoguickaMap Map;
 
         //Do we check for valid move every move?
@@ -30,7 +30,7 @@ namespace Roguicka.Interact {
 
         int moveX, moveY;
 
-        public MoveEvent(IActor hero, IRoguickaMap map, bool checkMove, params EMoveEvent[] e) {
+        public MoveEvent(Player hero, IRoguickaMap map, bool checkMove, params EMoveEvent[] e) {
             Actor = hero;
             MovementTypes = e;
             CheckMove = checkMove;
@@ -48,9 +48,9 @@ namespace Roguicka.Interact {
             if (Map.GetCell(newX, newY).IsWalkable) {
                 if (CheckForBlock(newX, newY)) {
                     //if (Actor.Type == ActorType.Player) {
-                    var blocker = LogicEngine._actors.First(blocked => blocked.X == newX && blocked.Y == newY && blocked is IDestructible) as IActor;
+                    var blocker = LogicEngine._actors.First(blocked => blocked.X == newX && blocked.Y == newY && blocked is IDestructible) as Player;
                     if (blocker.Type != Actor.Type) {
-                        InteractStack.Push(new FightEvent(Actor, (IDestructible)blocker, EFightEvent.Hit));
+                        InteractStack.Push(new FightEvent(Actor, blocker, EFightEvent.Hit));
                     }
                     //}
                     //InteractStack.Pop();

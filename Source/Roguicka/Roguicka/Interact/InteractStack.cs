@@ -18,6 +18,7 @@ namespace Roguicka.Interact {
             if (messages != null)
             foreach(string s in messages) {
                 if (s != null) {
+                    //TODO: Convert this system over to logging engine
                     Console.WriteLine(s);
                 }
             }

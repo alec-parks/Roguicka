@@ -4,10 +4,10 @@ using Roguicka.Actors;
 namespace Roguicka.Interact {
     class LevelUpEvent : InteractEvent {
 
-        IActor Actor;
+        Player Actor;
         public DotNetRandom random;
 
-        public LevelUpEvent(IActor actor) {
+        public LevelUpEvent(Player actor) {
             Actor = actor;
             random = new DotNetRandom();
             

@@ -37,6 +37,7 @@ namespace Roguicka.Actors
             Symbol = symbol;
             MaxHp = hp;
             CurrentHp = hp;
+
         }
 
         public virtual void TakeDamage(int amount)
