@@ -1,9 +1,6 @@
 ﻿using Roguicka.Actors;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RLNET;
 using Roguicka.Interact;
 using RogueSharp.Random;
@@ -22,7 +19,7 @@ namespace Roguicka.Helpers {
 
     public static class MonsterGenerator {
 
-        public static DotNetRandom random = new DotNetRandom();
+        public static DotNetRandom Random = new DotNetRandom();
 
         public static Dictionary<EMonsterType, Stats> Beastiary = new Dictionary<EMonsterType, Stats>() {
             { EMonsterType.Goblin, new Stats(3,3,10,4,5,5,1) },
@@ -36,13 +33,15 @@ namespace Roguicka.Helpers {
 
         public static Monster MakeMonster(int level, EMonsterType e) {
             var coord = Game.Instance.Map.GetFreeRandomCoord();
-            Monster monster = new Monster(50, 50, coord.Item1, coord.Item2, RLColor.Red, (char)e);
+            Monster monster = new Monster(50, coord.Item1, coord.Item2, RLColor.Red, (char) e, true)
+            {
+                Stats = Beastiary[e]
+            };
 
-            monster.Stats = Beastiary[e];
-            for (int i = 0; i < level - 1; i++) {
+            for (var i = 0; i < level - 1; i++) {
                 LevelUpEvent l = new LevelUpEvent(monster);
                 //Now THAT'S what I call a hack
-                l.random = random;
+                l.random = Random;
                 InteractStack.Push(l);
             }
 
@@ -50,10 +49,10 @@ namespace Roguicka.Helpers {
         }
 
         public static Monster MakeRandomMonster(int level) {
-            var enemies = Beastiary.Values.ToList();
+//            var enemies = Beastiary.Values.ToList();
             var enemyType = Beastiary.Keys.ToList();
 
-            int place = random.Next(enemyType.Count() - 1);
+            int place = Random.Next(enemyType.Count() - 1);
             return MakeMonster(level, enemyType[place]);
         }
 

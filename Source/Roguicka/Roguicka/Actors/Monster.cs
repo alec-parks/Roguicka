@@ -7,7 +7,6 @@ namespace Roguicka.Actors
     {
         public new ActorType Type { get; } = ActorType.Monster;
         public int Chase { get; set; } = 0;
-        public bool IsDead => CurrentHp <= 0;
         public Cell Target { get; set; }
 
         public Monster() : base(ActorType.Monster, 1,1,'M',1, true, RLColor.Green)
@@ -17,28 +16,17 @@ namespace Roguicka.Actors
             base(ActorType.Monster, xPos,yPos,symbol,maxHp,blocker,color)
         {}
 
-        public void TakeDamage(int amount) {
-            CurrentHp -= amount;
+        public override void TakeDamage(int amount) {
             Description = "A scary monster, with " + CurrentHp + "/" + MaxHp + "hp";
-            if (IsDead) {
-                SetDead();
-            }
+            base.TakeDamage(amount);
         }
 
-        public void Heal(int amount) {
-            if (amount + CurrentHp > MaxHp) {
-                CurrentHp = MaxHp;
-            }
-            else if (amount >= 0) {
-                CurrentHp += amount;
-            }
-        }
-
-        private void SetDead() {
-
-            Blocks = false;
-            InteractStack.Push(new DeathEvent(Engine.GetHero(), this));
-            Symbol = '%';
-        }
+//        protected override void SetDead()
+//        {
+//            InteractStack.Push(new DeathEvent(Engine.GetHero(), this));
+//            base.SetDead();
+        //TODO find altnernate way to do this.
+        //Requiring an engine is tight coupling and makes testing test multiple things.
+//        }
     }
 }

@@ -5,13 +5,15 @@ namespace Roguicka.Actors
     public class Player:IActor,IDestructible
     {
         public ActorType Type { get; }
+        public Stats Stats { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
         public bool Blocks { get; private set; } = true;
         public RLColor Color { get; private set; } = RLColor.Black;
         public char Symbol { get; private set; }
+        public string Description { get; set; } = "A player";
         public int CurrentHp { get; set; }
-        public int MaxHp { get; private set; }
+        public int MaxHp { get; }
         public bool IsDead => CurrentHp <= 0;
 
         public Player()
@@ -22,6 +24,7 @@ namespace Roguicka.Actors
             Symbol = 'P';
             MaxHp = 1;
             CurrentHp = 1;
+            Stats = new Stats(1,1,1,1,1,1,1);
         }
 
         public Player(ActorType actorType, int x, int y, char symbol, int hp, bool blocker, RLColor color)
@@ -36,7 +39,7 @@ namespace Roguicka.Actors
             CurrentHp = hp;
         }
 
-        public void TakeDamage(int amount)
+        public virtual void TakeDamage(int amount)
         {
             CurrentHp -= amount;
             if (IsDead)
@@ -45,7 +48,7 @@ namespace Roguicka.Actors
             }
         }
 
-        private void SetDead()
+        protected virtual void SetDead()
         {
             Symbol = '%';
             Blocks = false;

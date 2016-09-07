@@ -1,9 +1,6 @@
-﻿using Roguicka.Actors;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Roguicka.Interact {
     public static class InteractStack {
