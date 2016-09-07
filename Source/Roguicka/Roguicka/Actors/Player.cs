@@ -41,7 +41,10 @@ namespace Roguicka.Actors
 
         public virtual void TakeDamage(int amount)
         {
-            CurrentHp -= amount;
+            if (amount >= 0)
+            {
+                CurrentHp -= amount;
+            }
             if (IsDead)
             {
                 SetDead();

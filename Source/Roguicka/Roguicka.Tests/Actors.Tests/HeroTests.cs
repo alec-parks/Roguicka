@@ -8,7 +8,7 @@ namespace Roguicka.Tests.Actors.Tests
         [Fact]
         public void ShouldNotBeDead()
         {
-            var sut = new Hero(1,1,10,10,'@');
+            var sut = new Hero();
 
             Assert.False(sut.IsDead);
         }
@@ -18,7 +18,7 @@ namespace Roguicka.Tests.Actors.Tests
         [InlineData(-5)]
         public void ShouldBeDead(int hp)
         {
-            var sut = new Hero(1, 1, hp, 10, '@');
+            var sut = new Hero(1,1,hp,'@');
 
             Assert.True(sut.IsDead);
         }
@@ -28,7 +28,7 @@ namespace Roguicka.Tests.Actors.Tests
         [InlineData(10, 10, 20)]
         public void ShouldHeal(int start, int heal, int result)
         {
-            var sut = new Hero(1, 1, start, start + heal, '@');
+            var sut = new Hero(1, 1, result, '@') {CurrentHp = start};
             sut.Heal(heal);
             Assert.Equal(result,sut.CurrentHp);
         }
@@ -38,7 +38,7 @@ namespace Roguicka.Tests.Actors.Tests
         [InlineData(10, 100000, 10)]
         public void ShouldNotHealAboveMaxHp(int start, int heal, int max)
         {
-            var sut = new Hero(1, 1, start, max, '@');
+            var sut = new Hero(1, 1, max, '@') {CurrentHp = start};
             sut.Heal(heal);
             Assert.Equal(max,sut.CurrentHp);
         }
@@ -47,7 +47,7 @@ namespace Roguicka.Tests.Actors.Tests
         [InlineData(1, -1, 1)]
         public void ShouldNotHealNegativeValues(int start, int heal, int result)
         {
-            var sut = new Hero(1, 1, start, result, '@');
+            var sut = new Hero(1, 1, result, '@') {CurrentHp = start};
             sut.Heal(heal);
             Assert.Equal(result,sut.CurrentHp);
         }
@@ -95,7 +95,7 @@ namespace Roguicka.Tests.Actors.Tests
         [InlineData(10, -60, 10)]
         public void ShouldTakeDamage(int hp, int dam, int result)
         {
-            var sut = new Hero(1,1,hp,hp,'@');
+            var sut = new Hero(1,1,hp,'@');
             sut.TakeDamage(dam);
             Assert.Equal(result,sut.CurrentHp);
         }
