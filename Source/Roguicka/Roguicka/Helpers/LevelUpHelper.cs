@@ -1,10 +1,6 @@
 ﻿using Roguicka.Actors;
 using Roguicka.Interact;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Roguicka.Helpers {
     public static class LevelUpHelper {

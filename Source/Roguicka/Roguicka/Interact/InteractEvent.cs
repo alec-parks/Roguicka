@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Roguicka.Interact {
+﻿namespace Roguicka.Interact {
     public class InteractEvent {
         public virtual void Trigger() { }
 

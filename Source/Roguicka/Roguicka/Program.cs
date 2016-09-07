@@ -20,7 +20,7 @@ namespace Roguicka
             Game.Instance.Map = _map;
 			string FontFileName = @"Fonts"+ DirectorySeparatorChar + "terminal8x8.png";
             Engine engine = new Engine(ScreenWidth,ScreenHeight,FontFileName);
-            Hero player = new Hero(25,25,30,30,'@');
+            Hero player = new Hero(25,30,30,'@');
             Engine.AddActor(player);
             InteractStack.Push(new SpawnEvent(10));
             engine.Update();

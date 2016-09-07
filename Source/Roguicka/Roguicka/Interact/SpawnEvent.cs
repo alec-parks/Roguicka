@@ -1,19 +1,12 @@
-﻿using RLNET;
-using RogueSharp.Random;
+﻿using RogueSharp.Random;
 using Roguicka.Actors;
 using Roguicka.Engines;
 using Roguicka.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Roguicka.Interact {
     public class SpawnEvent : InteractEvent {
 
         int SpawnCount;
-        DotNetRandom random = new DotNetRandom();
 
         //Change so theres multiple ways of spawning
         public SpawnEvent(int spawnCount) {
