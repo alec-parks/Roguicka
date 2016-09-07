@@ -8,7 +8,7 @@ namespace Roguicka.Engines
     public class LogicEngine
     {
         private const int ChaseTurns = 3;
-        private IEnumerable<IActor> _actors;
+        public static IEnumerable<IActor> _actors;
 
         public bool Move(IActor actor, int newX, int newY, IRoguickaMap map)
         {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using RogueSharp;
 using RogueSharp.Random;
+using System;
 
 namespace Roguicka.Maps
 {
@@ -8,10 +9,12 @@ namespace Roguicka.Maps
     {
 
         private readonly IMap _map;
+        private DotNetRandom _random;
 
         public RoguickaMap(IMap map)
         {
             _map = map;
+            _random = new DotNetRandom();
         }
 
         public bool IsWalkable(int x, int y)
@@ -65,11 +68,23 @@ namespace Roguicka.Maps
             DotNetRandom dnr = new DotNetRandom();
             do
             {
-                var x = dnr.Next(Width);
-                var y = dnr.Next(Height);
+                var x = dnr.Next(Width - 1);
+                var y = dnr.Next(Height - 1);
                 cell = _map.GetCell(x, y);
             } while (!cell.IsWalkable);
             return cell;
+        }
+
+       
+
+        public Tuple<int,int> GetFreeRandomCoord() {
+            int x = _random.Next(Game.Instance.Map.Width - 1);
+            int y = _random.Next(Game.Instance.Map.Height - 1);
+            while (!Game.Instance.Map.IsWalkable(x, y)) {
+                x = _random.Next(Game.Instance.Map.Width - 1);
+                y = _random.Next(Game.Instance.Map.Height - 1);
+            }
+            return new Tuple<int, int>(x, y);
         }
 
         public int Width => _map.Width;

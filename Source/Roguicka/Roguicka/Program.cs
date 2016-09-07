@@ -2,6 +2,7 @@
 using RogueSharp;
 using Roguicka.Actors;
 using Roguicka.Engines;
+using Roguicka.Interact;
 using Roguicka.Maps;
 using static System.IO.Path;
 
@@ -20,9 +21,8 @@ namespace Roguicka
 			string FontFileName = @"Fonts"+ DirectorySeparatorChar + "terminal8x8.png";
             Engine engine = new Engine(ScreenWidth,ScreenHeight,FontFileName);
             Hero player = new Hero(25,25,30,30,'@');
-            Monster mob = new Monster(5,10,15,RLColor.Green,'T',true);
-            engine.AddActor(player);
-            engine.AddActor(mob);
+            Engine.AddActor(player);
+            InteractStack.Push(new SpawnEvent(10));
             engine.Update();
             engine.Render();
             while (!engine.RootConsole().IsWindowClosed())

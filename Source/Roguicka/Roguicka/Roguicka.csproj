@@ -57,6 +57,15 @@
     <Compile Include="Engines\RenderingEngine.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GlobalEnums.cs" />
+    <Compile Include="Helpers\LevelUpHelper.cs" />
+    <Compile Include="Helpers\MonsterGenerator.cs" />
+    <Compile Include="Interact\DeathEvent.cs" />
+    <Compile Include="Interact\FightEvent.cs" />
+    <Compile Include="Interact\InteractEvent.cs" />
+    <Compile Include="Interact\InteractStack.cs" />
+    <Compile Include="Interact\LevelUpEvent.cs" />
+    <Compile Include="Interact\MoveEvent.cs" />
+    <Compile Include="Interact\SpawnEvent.cs" />
     <Compile Include="Maps\IRoguickaMap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
