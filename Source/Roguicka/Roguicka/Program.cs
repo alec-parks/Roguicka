@@ -2,6 +2,7 @@
 using RogueSharp;
 using Roguicka.Actors;
 using Roguicka.Engines;
+using Roguicka.Helpers;
 using Roguicka.Interact;
 using Roguicka.Maps;
 using static System.IO.Path;
@@ -23,6 +24,7 @@ namespace Roguicka
             Hero player = new Hero(25,30,30,'@');
             player.Stats = new Stats(10,10,10,8,0,0,1);
             Engine.AddActor(player);
+            MonsterGenerator.LoadMonstersFromJSON("test");
             InteractStack.Push(new SpawnEvent(10));
             engine.Update();
             engine.Render();

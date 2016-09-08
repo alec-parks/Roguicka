@@ -4,6 +4,8 @@ using System.Linq;
 using RLNET;
 using Roguicka.Interact;
 using RogueSharp.Random;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace Roguicka.Helpers {
 
@@ -15,27 +17,24 @@ namespace Roguicka.Helpers {
         Rat = 'R'
     }
 
-
+    public class Beastiary {
+        public List<Monster> MonsterList = new List<Monster>();
+    }
 
     public static class MonsterGenerator {
 
         public static DotNetRandom Random = new DotNetRandom();
 
-        public static Dictionary<EMonsterType, Stats> Beastiary = new Dictionary<EMonsterType, Stats>() {
-            { EMonsterType.Goblin, new Stats(3,3,10,4,5,5,1) },
-            { EMonsterType.Elf, new Stats(3,5,10,6,10,10,1) },
-            { EMonsterType.Rat, new Stats(2,2,5,4,7,3,1) },
-            { EMonsterType.Troll, new Stats(5,3,10,2,15,10,1) },
-            { EMonsterType.Wizard, new Stats(4,4,10,7,0,15,1) }
-        };
-
-        //static string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        public static Beastiary Beastiary = new Beastiary();
 
         public static Monster MakeMonster(int level, EMonsterType e) {
             var coord = Game.Instance.Map.GetFreeRandomCoord();
-            Monster monster = new Monster(50, coord.Item1, coord.Item2, RLColor.Red, (char) e, true)
-            {
-                Stats = Beastiary[e]
+            Monster monster = new Monster(50, coord.Item1, coord.Item2, RLColor.Red, (char)e, true) {
+                MonsterType = e,
+                Stats = Beastiary.MonsterList.Single(x => x.MonsterType == e).Stats,
+                CurrentHp = Beastiary.MonsterList.Single(x => x.MonsterType == e).CurrentHp,
+                
+                
             };
 
             for (var i = 0; i < level - 1; i++) {
@@ -49,12 +48,17 @@ namespace Roguicka.Helpers {
         }
 
         public static Monster MakeRandomMonster(int level) {
-//            var enemies = Beastiary.Values.ToList();
-            var enemyType = Beastiary.Keys.ToList();
-
-            int place = Random.Next(enemyType.Count() - 1);
-            return MakeMonster(level, enemyType[place]);
+            int place = Random.Next(Beastiary.MonsterList.Count() - 1);
+            return MakeMonster(level, Beastiary.MonsterList[place].MonsterType);
         }
+
+        public static void LoadMonstersFromJSON(string fileName) {
+            using (StreamReader r = new StreamReader(fileName + ".json")) {
+                string json = r.ReadToEnd();
+                Beastiary = JsonConvert.DeserializeObject<Beastiary>(json);
+            }
+        }
+
 
     }
 }
