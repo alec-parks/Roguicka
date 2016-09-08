@@ -56,7 +56,7 @@ namespace Roguicka.Tests.Actors.Tests
         public void ShouldBeHero()
         {
             var sut = new Hero();
-            Assert.Equal(ActorType.Player,sut.Type);
+            Assert.Equal(ActorType.Hero,sut.Type);
         }
 
         [Fact]

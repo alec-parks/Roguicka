@@ -65,7 +65,7 @@ namespace Roguicka.Engines
             foreach (var actor in
                 from actor in actors.OrderBy(actor => actor.CurrentHp)
                 let cell = _map.GetCell(actor.X, actor.Y)
-                where cell.IsInFov && ( actor.Type == ActorType.Player || actor.Type == ActorType.Monster )
+                where cell.IsInFov && ( actor.Type == ActorType.Hero || actor.Type == ActorType.Monster )
                 select actor)
             {
                 _rlConsole.Set(actor.X, actor.Y, actor.Color, null, actor.Symbol);

@@ -49,7 +49,7 @@ namespace Roguicka.Engines {
         }
 
         public static Hero GetHero() {
-            return (Hero)_actors.Single(actor => actor.Type == ActorType.Player);
+            return (Hero)_actors.Single(actor => actor.Type == ActorType.Hero);
         }
 
         private void OnRootConsoleRender(object sender, UpdateEventArgs e) {
