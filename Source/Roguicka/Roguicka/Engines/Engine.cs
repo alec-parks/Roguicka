@@ -49,7 +49,7 @@ namespace Roguicka.Engines {
         }
 
         public static Hero GetHero() {
-            return (Hero)_actors.Single(actor => actor.Type == ActorType.Player);
+            return (Hero)_actors.Single(actor => actor.Type == ActorType.Hero);
         }
 
         private void OnRootConsoleRender(object sender, UpdateEventArgs e) {
@@ -57,7 +57,7 @@ namespace Roguicka.Engines {
             var player = GetHero();
             _renderingEngine.ComputeFov(player);
             _renderingEngine.UpdateExploredArea();
-            var _players = _actors.Where(x => x.Type == ActorType.Player || x.Type == ActorType.Monster).Cast<Player>().ToList();
+            var _players = _actors.OfType<Player>();
             _renderingEngine.DrawVisiblePlayers(_players);
             _renderingEngine.DrawConsole();
         }

@@ -20,7 +20,7 @@ namespace Roguicka.Interact {
             
             Actor.Stats.Level++;
             //Prevent showing when enemies level up
-            if (Actor.Type == ActorType.Player) {
+            if (Actor.Type == ActorType.Hero) {
                 Actor.Stats.Exp = 0;
                 Messages[0] = Special;
                 Messages[1] = "Level up to lvl: " + Actor.Stats.Level;

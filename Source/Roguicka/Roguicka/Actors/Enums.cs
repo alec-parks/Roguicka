@@ -2,7 +2,7 @@
 {
     public enum ActorType
     {
-        Player,
+        Hero,
         Monster
     }
 
