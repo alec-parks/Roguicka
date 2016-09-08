@@ -26,8 +26,8 @@ namespace Roguicka.Interact {
         
         public override void Trigger() {
             //Still kinda weird
-            int damage = Sender.Stats.Attack + MonsterGenerator.Random.Next(-2 - (Sender.Stats.Level), 2 + (Sender.Stats.Level));
-            damage -= Reciever.Stats.Defense / 4;
+            int damage = Sender.Stats.Stat["Attack"] + MonsterGenerator.Random.Next(-2 - (Sender.Stats.Stat["Level"]), 2 + (Sender.Stats.Stat["Level"]));
+            damage -= Reciever.Stats.Stat["Defense"] / 4;
             //Make sure you can't heal the opponent when attacking
             damage = Math.Max(damage, 0);
             Reciever?.TakeDamage(damage);

@@ -12,7 +12,7 @@ namespace Roguicka.Helpers {
 
         //If they have enough Exp at their level, push a new event
         public static void CheckLeveledUp(Player actor) {
-            if (actor.Stats.Exp > XpRequirement(actor.Stats.Level)) {
+            if (actor.Stats.Stat["Exp"] > XpRequirement(actor.Stats.Stat["Level"])) {
                 InteractStack.Push(new LevelUpEvent(actor));
             }
         }

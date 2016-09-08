@@ -80,7 +80,7 @@ namespace Roguicka.Engines {
             //Add energy to hero
             player.Stats.AddEnergy();
             //If we have enough energy, attack and reset. Same for monsters
-            if (player.Stats.Energy > player.Stats.NeededEnergy) {
+            if (player.Stats.Stat["Energy"] > player.Stats.Stat["NeededEnergy"]) {
                 if (keyPress != null) {
                     HandleInput(player, keyPress);
                     player.Stats.UseEnergy();
@@ -136,7 +136,7 @@ namespace Roguicka.Engines {
                     break;
             }
             //_gameState = GameState.NewTurn;
-            //MonsterMash();
+            MonsterMash();
         }
 
         private void MonsterMash() {
@@ -145,7 +145,7 @@ namespace Roguicka.Engines {
             foreach (var monster in GetDestructible(ActorType.Monster).Where(monster => !monster.IsDead).Cast<Monster>()) {
                 ;
                 monster.Stats.AddEnergy();
-                if (monster.Stats.Energy >= monster.Stats.NeededEnergy) {
+                if (monster.Stats.Stat["Energy"] >= monster.Stats.Stat["NeededEnergy"]) {
                     monster.Stats.UseEnergy();
                     Game.Instance.Map.ComputeFov(monster.X, monster.Y, 5, true);
                     if (monster.Chase > 0) {
