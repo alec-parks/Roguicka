@@ -6,6 +6,8 @@
         Monster
     }
 
+
+
     public enum ElementType
     {
         Fire

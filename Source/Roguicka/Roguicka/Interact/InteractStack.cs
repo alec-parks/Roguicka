@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace Roguicka.Interact {
+    /// <summary>
+    /// This is actually a Queue
+    /// Any commands can get pushed to this, then are executed at the end of the round
+    /// 
+    /// </summary>
     public static class InteractStack {
 
         static Queue<InteractEvent> InteractEvents = new Queue<InteractEvent>();

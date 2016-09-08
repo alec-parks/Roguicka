@@ -22,7 +22,7 @@ namespace Roguicka.Tests.Actors.Tests
         [InlineData(10, 1, 9)]
         public void ShouldTakeDamage(int hp, int damage, int result)
         {
-            var sut = new Monster(hp, 1, 1, RLColor.Black, 'D', true);
+            var sut = new Monster(Helpers.EMonsterType.Goblin, hp, new Stats(0, 0, 0, 0, 0, 0, 1), 0, 0, 'm', RLColor.Red);
 
             sut.TakeDamage(damage);
 
@@ -34,7 +34,7 @@ namespace Roguicka.Tests.Actors.Tests
         [InlineData(1, 20)]
         public void ShouldBeDead(int hp, int damage)
         {
-            var sut = new Monster(hp, 1, 1, RLColor.Black, 'D', true);
+            var sut = new Monster(Helpers.EMonsterType.Goblin, hp, new Stats(0,0,0,0,0,0,1), 0,0,'m',RLColor.Red);
 
             sut.TakeDamage(damage);
 
@@ -46,7 +46,8 @@ namespace Roguicka.Tests.Actors.Tests
         {
             for (int i = 1; i < 1000; i++)
             {
-                var sut = new Monster(i, 1, 1, RLColor.Black, 'D', true);
+                var sut = new Monster(Helpers.EMonsterType.Goblin, i, new Stats(0, 0, 0, 0, 0, 0, 1), 0, 0, 'm', RLColor.Red);
+
                 Assert.False(sut.IsDead);
             }
         }
@@ -56,7 +57,7 @@ namespace Roguicka.Tests.Actors.Tests
         [InlineData(10, 10, 20)]
         public void ShouldHeal(int hp, int heal, int result)
         {
-            var sut = new Monster(result, 1, 1, RLColor.Black, 'D', true);
+            var sut = new Monster(Helpers.EMonsterType.Goblin, hp, new Stats(0, 0, 0, 0, 0, 0, 1), 0, 0, 'm', RLColor.Red);
 
             sut.TakeDamage(result-hp);
 
@@ -70,7 +71,7 @@ namespace Roguicka.Tests.Actors.Tests
         [InlineData(10, 10000000, 10)]
         public void ShouldNotHealAboveMax(int hp, int heal, int result)
         {
-            var sut = new Monster(result, 1, 1, RLColor.Black, 'D', true);
+            var sut = new Monster(Helpers.EMonsterType.Goblin, hp, new Stats(0, 0, 0, 0, 0, 0, 1), 0, 0, 'm', RLColor.Red);
 
             sut.CurrentHp = hp;
 
@@ -110,7 +111,7 @@ namespace Roguicka.Tests.Actors.Tests
         [InlineData(1,-1,1)]
         public void ShouldHealCorrectAmount(int hp, int heal, int result)
         {
-            var sut = new Monster(result, 1, 1, RLColor.Green, 'M', true) {CurrentHp = hp};
+            var sut = new Monster(Helpers.EMonsterType.Goblin, hp, new Stats(0, 0, 0, 0, 0, 0, 1), 0, 0, 'm', RLColor.Red);
             sut.Heal(heal);
             Assert.Equal(result,sut.CurrentHp);
         }

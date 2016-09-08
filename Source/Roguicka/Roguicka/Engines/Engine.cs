@@ -57,7 +57,7 @@ namespace Roguicka.Engines {
             var player = GetHero();
             _renderingEngine.ComputeFov(player);
             _renderingEngine.UpdateExploredArea();
-            var _players = _actors.Where(x => x.Type == ActorType.Player || x.Type == ActorType.Monster).Cast<Player>().ToList();
+            var _players = _actors.OfType<Player>();
             _renderingEngine.DrawVisiblePlayers(_players);
             _renderingEngine.DrawConsole();
         }
@@ -78,12 +78,12 @@ namespace Roguicka.Engines {
             var player = GetHero();
             _logicEngine.Actors(_actors);
             //Add energy to hero
-            player.Stats.Energy += player.Stats.EnergyGain;
+            player.Stats.AddEnergy();
             //If we have enough energy, attack and reset. Same for monsters
-            if (player.Stats.Energy >= player.Stats.NeededEnergy) {
+            if (player.Stats.Energy > player.Stats.NeededEnergy) {
                 if (keyPress != null) {
                     HandleInput(player, keyPress);
-                    player.Stats.Energy = 0;
+                    player.Stats.UseEnergy();
                 }
             }
             else {
@@ -144,9 +144,9 @@ namespace Roguicka.Engines {
 
             foreach (var monster in GetDestructible(ActorType.Monster).Where(monster => !monster.IsDead).Cast<Monster>()) {
                 ;
-                monster.Stats.Energy += monster.Stats.EnergyGain;
+                monster.Stats.AddEnergy();
                 if (monster.Stats.Energy >= monster.Stats.NeededEnergy) {
-                    monster.Stats.Energy = 0;
+                    monster.Stats.UseEnergy();
                     Game.Instance.Map.ComputeFov(monster.X, monster.Y, 5, true);
                     if (monster.Chase > 0) {
                         MonsterMove(monster, hero.X, hero.Y);

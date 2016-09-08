@@ -4,14 +4,23 @@ namespace Roguicka.Actors
 {
 
     public class Stats {
-        public int Attack;
-        public int Defense;
-        public int Energy;
-        public int EnergyGain;
-        public int NeededEnergy;
-        public int Gold;
-        public int Exp;
-        public int Level;
+        public int Attack { get; }
+        public int Defense { get; }
+        public int Energy { get; private set; }
+        public int EnergyGain { get; }
+        public int NeededEnergy { get; }
+        public int Gold { get; }
+        public int Exp { get; }
+        public int Level { get; }
+
+        public void AddEnergy()
+        {
+            Energy += EnergyGain;
+        }
+
+        public void UseEnergy() {
+            Energy = 0;
+        }
 
         public Stats(int attack, int defense, int needed, int enGain, int gold, int exp, int level) {
             Attack = attack;

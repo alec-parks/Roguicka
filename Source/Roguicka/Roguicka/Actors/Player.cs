@@ -40,6 +40,10 @@ namespace Roguicka.Actors
 
         }
 
+        public virtual void LevelUp() {
+            
+        }
+
         public virtual void TakeDamage(int amount)
         {
             if (amount >= 0)

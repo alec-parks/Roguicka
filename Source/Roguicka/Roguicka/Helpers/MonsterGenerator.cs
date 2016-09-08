@@ -14,7 +14,8 @@ namespace Roguicka.Helpers {
         Elf = 'E',
         Troll = 'T',
         Wizard = 'W',
-        Rat = 'R'
+        Rat = 'R',
+        Druid = 'D'
     }
 
     public class Beastiary {
@@ -32,14 +33,9 @@ namespace Roguicka.Helpers {
             //Make sure that they can spawn in a valid place
             var coord = Game.Instance.Map.GetFreeRandomCoord();
             //Fill up monster with stats
-            Monster monster = new Monster(e, level) {
-                //Change to constructor
-                MonsterType = e,
-                Stats = Beastiary.MonsterList.Single(x => x.MonsterType == e).Stats,
-                CurrentHp = Beastiary.MonsterList.Single(x => x.MonsterType == e).CurrentHp,
-                X = coord.Item1,
-                Y = coord.Item2,
-            };
+            Stats Stats = Beastiary.MonsterList.Single(x => x.MonsterType == e).Stats;
+            int MaxHp = Beastiary.MonsterList.Single(x => x.MonsterType == e).CurrentHp;
+            Monster monster = new Monster(e, MaxHp, Stats, coord.Item1, coord.Item2, (char)e, RLColor.Red);
 
             //This is where we bring the monster up to the required level
             for (var i = 0; i < level - 1; i++) {
@@ -54,7 +50,6 @@ namespace Roguicka.Helpers {
         }
         //This just picks a EMonsterType at random then calls the normal make monster function
         public static Monster MakeRandomMonster(int level) {
-            
             int place = Random.Next(Beastiary.MonsterList.Count() - 1);
             return MakeMonster(level, Beastiary.MonsterList[place].MonsterType);
         }

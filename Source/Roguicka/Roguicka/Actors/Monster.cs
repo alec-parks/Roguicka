@@ -13,9 +13,10 @@ namespace Roguicka.Actors {
 
         public Monster() : base(ActorType.Monster, 1, 1, 'M', 1, true, RLColor.Green) { }
 
-        public Monster(EMonsterType monsterType, int level) {
+        public Monster(EMonsterType monsterType, int maxHP, Stats stats, int x, int y, char symbol, RLColor color)
+            :base(ActorType.Monster, x, y, symbol, maxHP, true, color){
             MonsterType = monsterType;
-            Stats.Level = level;
+            Stats = stats;
             //Symbol = monsterType;
         }
 
