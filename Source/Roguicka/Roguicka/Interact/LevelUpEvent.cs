@@ -21,10 +21,10 @@ namespace Roguicka.Interact {
             _actor.Stats.LevelUpStat("Attack", Random.Next(1, 6));
             _actor.Stats.LevelUpStat("Defense", Random.Next(1, 6));
             
-            //Actor.Stats.Level++;
+            _actor.Stats.LevelUpStat("Level", 1);
             //Prevent showing when enemies level up
             if (_actor.Type == ActorType.Hero) {
-                //Actor.Stats.Exp = 0;
+                _actor.Stats.Stat["Exp"] = 0;
                 Messages[0] = Special;
                 Messages[1] = "Level up to lvl: " + _actor.Stats.Stat["Level"];
                 Messages[2] = "Attack: " + _actor.Stats.Stat["Attack"];

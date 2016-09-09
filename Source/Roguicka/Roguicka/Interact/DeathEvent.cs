@@ -14,8 +14,9 @@ namespace Roguicka.Interact {
 
         public override void Trigger() {
             if (DeadActor.Type == ActorType.Monster && DeadActor.Stats.Stat["Exp"] != -1) {
-                //LiveActor.Stats.Gold += DeadActor.Stats.Gold;
-                //LiveActor.Stats.Exp += DeadActor.Stats.Exp;
+                LiveActor.Stats.Stat["Gold"] += DeadActor.Stats.Stat["Gold"];
+                LiveActor.Stats.Stat["Exp"] += DeadActor.Stats.Stat["Exp"];
+                
                 Messages[0] = Spacer;
                 Messages[1] = "You gained " + DeadActor.Stats.Stat["Gold"] + " gold and " + DeadActor.Stats.Stat["Exp"] + " xp";
                 Messages[2] = "Total gold: " + LiveActor.Stats.Stat["Gold"] + " Total xp: " + LiveActor.Stats.Stat["Exp"];

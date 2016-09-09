@@ -21,7 +21,7 @@ namespace Roguicka
             Game.Instance.Map = _map;
 			string FontFileName = @"Fonts"+ DirectorySeparatorChar + "terminal8x8.png";
             Engine engine = new Engine(ScreenWidth,ScreenHeight,FontFileName);
-            Hero player = new Hero(25,30,30,'@');
+            Hero player = new Hero(25,25,50,'@');
             player.Stats = new Stats(10,10,10,8,0,0,1);
             Engine.AddActor(player);
             MonsterGenerator.LoadMonstersFromJSON("test");
