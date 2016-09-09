@@ -1,5 +1,6 @@
 ﻿using Roguicka.Actors;
 using Roguicka.Engines;
+using Roguicka.Helpers;
 using Roguicka.Maps;
 using System.Linq;
 
@@ -43,6 +44,8 @@ namespace Roguicka.Interact {
             int newX = Actor.X + moveX;
             int newY = Actor.Y + moveY;
 
+            if (Actor.Type == ActorType.Hero)
+            Camera.UpdateCamera(moveX, moveY);
             
             bool turn = false;
             if (Map.GetCell(newX, newY).IsWalkable) {

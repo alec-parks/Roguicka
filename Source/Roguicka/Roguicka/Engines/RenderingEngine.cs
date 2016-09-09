@@ -4,6 +4,7 @@ using RLNET;
 using RogueSharp;
 using Roguicka.Actors;
 using Roguicka.Maps;
+using Roguicka.Helpers;
 
 namespace Roguicka.Engines
 {

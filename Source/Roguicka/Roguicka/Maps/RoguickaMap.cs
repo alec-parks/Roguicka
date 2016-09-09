@@ -2,6 +2,7 @@
 using RogueSharp;
 using RogueSharp.Random;
 using System;
+using Roguicka.Helpers;
 
 namespace Roguicka.Maps
 {
