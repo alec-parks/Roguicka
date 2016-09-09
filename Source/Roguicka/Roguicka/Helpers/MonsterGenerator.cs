@@ -31,18 +31,17 @@ namespace Roguicka.Helpers {
         //Here is where we create a monster from the prefabs
         public static Monster MakeMonster(int level, EMonsterType e) {
             //Make sure that they can spawn in a valid place
-            var coord = Game.Instance.Map.GetFreeRandomCoord();
+            var walkableCell = Game.Instance.Map.GetRandomCell();
             //Fill up monster with stats
             Stats Stats = Beastiary.MonsterList.Single(x => x.MonsterType == e).Stats;
             int MaxHp = Beastiary.MonsterList.Single(x => x.MonsterType == e).CurrentHp;
-            Monster monster = new Monster(e, MaxHp, Stats, coord.Item1, coord.Item2, (char)e, RLColor.Red);
+            Monster monster = new Monster(e, MaxHp, Stats, walkableCell.X, walkableCell.Y, (char)e, RLColor.Red);
 
             //This is where we bring the monster up to the required level
             for (var i = 0; i < level - 1; i++) {
                 //Level up events are shared with the hero, except I modified what happens a little bit
                 LevelUpEvent l = new LevelUpEvent(monster);
                 //Now THAT'S what I call a hack
-                l.random = Random;
                 InteractStack.Push(l);
             }
 
@@ -50,6 +49,7 @@ namespace Roguicka.Helpers {
         }
         //This just picks a EMonsterType at random then calls the normal make monster function
         public static Monster MakeRandomMonster(int level) {
+            
             int place = Random.Next(Beastiary.MonsterList.Count() - 1);
             return MakeMonster(level, Beastiary.MonsterList[place].MonsterType);
         }
