@@ -1,5 +1,4 @@
-﻿using RogueSharp.Random;
-using Roguicka.Actors;
+﻿using Roguicka.Actors;
 using Roguicka.Engines;
 using Roguicka.Helpers;
 

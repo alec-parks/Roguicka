@@ -1,11 +1,4 @@
-﻿using Roguicka.Interact;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Roguicka.Helpers {
+﻿namespace Roguicka.Helpers {
     public static class Camera {
 
         public static int xOffset { get; private set; }

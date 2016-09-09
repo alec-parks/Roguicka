@@ -26,6 +26,8 @@ namespace Roguicka.Maps
 
         IEnumerable<Cell> GetAllCells();
 
+        IEnumerable<Cell> GetCellsInRange(int xMin, int xMax, int yMin, int yMax);
+
         Cell GetRandomCell();
     }
 }

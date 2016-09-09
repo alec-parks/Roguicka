@@ -2,7 +2,7 @@
 using RogueSharp;
 using RogueSharp.Random;
 using System;
-using Roguicka.Helpers;
+using System.Linq;
 
 namespace Roguicka.Maps
 {
@@ -61,6 +61,12 @@ namespace Roguicka.Maps
         IEnumerable<Cell> IRoguickaMap.GetAllCells()
         {
             return _map.GetAllCells();
+        }
+
+        public IEnumerable<Cell> GetCellsInRange(int xMin, int xMax, int yMin, int yMax)
+        {
+            return _map.GetAllCells().
+                Where(cell => cell.X <= xMax && cell.X >= xMin && cell.Y <= yMax && cell.Y >= yMin).ToList();
         }
 
         public Cell GetRandomCell()

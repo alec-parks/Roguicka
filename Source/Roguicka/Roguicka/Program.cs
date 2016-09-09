@@ -1,5 +1,4 @@
-﻿using RLNET;
-using RogueSharp;
+﻿using RogueSharp;
 using Roguicka.Actors;
 using Roguicka.Engines;
 using Roguicka.Helpers;
@@ -17,14 +16,14 @@ namespace Roguicka
 
         public static void Main (string[] args)
 		{
-            _map = new RoguickaMap(Map.Create(new CaveMapCreationStrategy<Map>(ScreenWidth,ScreenHeight,45,4,3) ));
+            _map = new RoguickaMap(Map.Create(new CaveMapCreationStrategy<Map>(100,100,45,4,3) ));
             Game.Instance.Map = _map;
 			string FontFileName = @"Fonts"+ DirectorySeparatorChar + "terminal8x8.png";
             Engine engine = new Engine(ScreenWidth,ScreenHeight,FontFileName);
             Hero player = new Hero(25,25,50,'@');
             player.Stats = new Stats(10,10,10,8,0,0,1);
             Engine.AddActor(player);
-            MonsterGenerator.LoadMonstersFromJSON("test");
+            MonsterGenerator.LoadMonstersFromJSON(@"Beastiary" + DirectorySeparatorChar + "Monsters");
             InteractStack.Push(new SpawnEvent(10));
             engine.Update();
             engine.Render();

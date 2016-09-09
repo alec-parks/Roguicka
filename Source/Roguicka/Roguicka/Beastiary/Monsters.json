@@ -1,0 +1,86 @@
+﻿{
+    "MonsterList": [{
+            'MonsterType': "Goblin"
+            , 'CurrentHp': 30
+            , "MaxHp": 30
+            , 'Stats': {
+                'Attack': 5
+                , 'Defense': 5
+                , 'EnergyGain': 4
+                , 'NeededEnergy': 10
+                , 'Gold': 10
+                , 'Exp': 10
+                , 'Level': 1
+            }
+    }
+    , {
+            'MonsterType': "Rat"
+            , 'CurrentHp': 40
+            , "MaxHp": 40
+            , 'Stats': {
+                'Attack': 4
+                , 'Defense': 4
+                , 'EnergyGain': 6
+                , 'NeededEnergy': 10
+                , 'Gold': 7
+                , 'Exp': 5
+                , 'Level': 1
+            }
+    }
+    , {
+            'MonsterType': "Troll"
+            , 'CurrentHp': 70
+            , "MaxHp": 70
+            , 'Stats': {
+                'Attack': 6
+                , 'Defense': 6
+                , 'EnergyGain': 2
+                , 'NeededEnergy': 10
+                , 'Gold': 15
+                , 'Exp': 15
+                , 'Level': 1
+            }
+    }
+        , {
+            'MonsterType': "Wizard"
+            , 'CurrentHp': 30
+            , "MaxHp": 30
+            , 'Stats': {
+                'Attack': 10
+                , 'Defense': 5
+                , 'EnergyGain': 7
+                , 'NeededEnergy': 10
+                , 'Gold': 5
+                , 'Exp': 20
+                , 'Level': 1
+            }
+    }
+        , {
+            'MonsterType': "Elf"
+            , 'CurrentHp': 55
+            , "MaxHp": 55
+            , 'Stats': {
+                'Attack': 3
+                , 'Defense': 7
+                , 'EnergyGain': 4
+                , 'NeededEnergy': 10
+                , 'Gold': 12
+                , 'Exp': 12
+                , 'Level': 1
+            }
+    }
+        , {
+            'MonsterType': "Druid"
+            , 'CurrentHp': 50
+            , "MaxHp": 50
+            , 'Stats': {
+                'Attack': 7
+                , 'Defense': 7
+                , 'EnergyGain': 7
+                , 'NeededEnergy': 10
+                , 'Gold': 20
+                , 'Exp': 20
+                , 'Level': 2
+            }
+    }]
+}
