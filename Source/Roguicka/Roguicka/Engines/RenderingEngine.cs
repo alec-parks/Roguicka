@@ -33,10 +33,8 @@ namespace Roguicka.Engines
 
         public void UpdateExploredArea()
         {
-            var top = ScrollY();
-            var left = ScrollX();
             _rlConsole.Clear();
-            foreach (var cell in _map.GetCellsInRange(left, _rlConsole.Width, top, _rlConsole.Height))
+            foreach (var cell in _map.GetAllCells())
             {
                 SetCell(cell);
             }
