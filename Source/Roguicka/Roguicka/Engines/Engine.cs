@@ -4,6 +4,9 @@ using System.Linq;
 using RLNET;
 using Roguicka.Actors;
 using Roguicka.Interact;
+using Roguicka.Maps;
+using Roguicka.Helpers;
+using RogueSharp;
 
 namespace Roguicka.Engines {
     public class Engine {
@@ -13,15 +16,25 @@ namespace Roguicka.Engines {
         private GameState _gameState;
         private RenderingEngine _renderingEngine;
         private LogicEngine _logicEngine;
+        private FloorLevelHelper _levelHelper;
 
-        private bool _leftPressed;
-        private bool _leftReleased;
         public Engine(int width, int height, string file) {
             _rootConsole = new RLRootConsole(file, width, height, 8, 8, 1f, "RoguickaRL");
             _gameState = GameState.PlayerTurn;
-            _renderingEngine = new RenderingEngine(Game.Instance.Map, _rootConsole);
-            _logicEngine = new LogicEngine();
 
+            _levelHelper = new FloorLevelHelper();
+
+            _levelHelper.AddLevel("First", new RoguickaMap(Map.Create(new CaveMapCreationStrategy<Map>(50, 50, 45, 4, 3))));
+            _levelHelper.AddLevel("Second", new RoguickaMap(Map.Create(new CaveMapCreationStrategy<Map>(50, 50, 55, 4, 3))));
+
+            _levelHelper.SetLevel("First");
+
+            Stairs stairs = new Stairs(_levelHelper, 25, 26);
+            AddActor(stairs);
+
+            _renderingEngine = new RenderingEngine(_levelHelper.CurrentLevel, _rootConsole);
+            _logicEngine = new LogicEngine();
+            
         }
 
         public RLRootConsole RootConsole() {
@@ -58,6 +71,8 @@ namespace Roguicka.Engines {
             _renderingEngine.ComputeFov(player);
             _renderingEngine.UpdateExploredArea();
             var _players = _actors.OfType<Player>();
+            var _entities = _actors.OfType<Entity>();
+            _renderingEngine.DrawVisibleEntities(_entities);
             _renderingEngine.DrawVisiblePlayers(_players);
             _renderingEngine.DrawConsole();
         }
@@ -80,18 +95,24 @@ namespace Roguicka.Engines {
             //Add energy to hero
             player.Stats.AddEnergy();
             //If we have enough energy, attack and reset. Same for monsters
-            if (player.Stats.Stat["Energy"] > player.Stats.Stat["NeededEnergy"]) {
+            if (player.Stats.Stat["Energy"] > player.Stats.Stat["NeededEnergy"] && !player.IsDead) {
                 if (keyPress != null) {
+                    
                     HandleInput(player, keyPress);
+                    //Here we can maybe check for collisions with any IObjects
+                    //_logicEngine.CheckCollisionWithEntity(player);
+                    
                     player.Stats.UseEnergy();
                 }
             }
             else {
+                if(!player.IsDead)
                 MonsterMash();
 
             }
 
             InteractStack.ExecuteStack();
+           
         }
 
         private void HandleInput(Player player, RLKeyPress keyPress) {

@@ -1,0 +1,36 @@
+<Saturday morning>
+Right now, in order to check if there is a player standing on an object, it must either be pushed to the Queue
+or is executed once you walk off the stairs.
+
+<Later that night>
+The code is a mess. I have no clue where to put anything, and I'm just making things worse.
+
+<5 minutes later>
+Well god damn, I got level changing working. And it's actually not bad, I tried my best to avoid statics.
+I've been thinking about how to change this, since right now there's 3 different places storing the map.
+I'm just updating all of them, but I might have to use a static or something. I don't know what 
+it is, but I just keep running out of ways to access things.
+
+...Maybe a flowchart would work. We need some general overhead stuff, such as guidelines, so we don't
+keep running into problems like this. Im stopping work on it for now, major refactoring might be needed
+in the future.
+
+<Sunday morning>
+Decided to work on bug fixes. For some reason, NeededEnergy isn't loading up, so all monsters can move right away
+lol what. I changed the constructor in stats for their lowercase proper form, and it worked. That was some weird JSONConvert
+stuff going on there.
+
+Bugs:
+	Sometimes monsters dont move at all
+	Slow enemy on corpse yields lots of loot from corpse when attacked
+
+Fixed:
+	Player no longer moves around while dead
+	Enemies don't spam kill you when you're dead
+	Energy is now loading up fom JSON (speed returned)
+	Hero no longer attacks dead bodies
+
+Other:
+	Need to balance out stats. Hero is way too OP
+	Attacking now shows the actual enemy that attacked you
+	Better level-up info

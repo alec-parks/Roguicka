@@ -7,7 +7,7 @@ namespace Roguicka.Helpers {
 
         //XP check, which is a slightly modified Pokemon leveling system
         public static int XpRequirement(int level) {
-            return (int)(4 * (Math.Pow(level,3)) / 2);
+            return (int)(4 * (Math.Pow(level,3))) + 20;
         }
 
         //If they have enough Exp at their level, push a new event

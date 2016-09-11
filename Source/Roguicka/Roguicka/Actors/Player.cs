@@ -13,7 +13,7 @@ namespace Roguicka.Actors
         public char Symbol { get; private set; }
         public string Description { get; set; } = "A player";
         public int CurrentHp { get; set; }
-        public int MaxHp { get; }
+        public int MaxHp { get; private set; }
         public bool IsDead => CurrentHp <= 0;
 
         public Player()
@@ -25,6 +25,11 @@ namespace Roguicka.Actors
             MaxHp = 1;
             CurrentHp = 1;
             Stats = new Stats(1,1,1,1,1,1,1);
+        }
+
+        public void LevelUpHP(int amount) {
+            MaxHp += amount;
+            CurrentHp = MaxHp;
         }
 
         public Player(ActorType actorType, int x, int y, char symbol, int hp, bool blocker, RLColor color)

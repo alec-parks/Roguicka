@@ -5,13 +5,13 @@ namespace Roguicka.Actors {
 
         public Dictionary<string, int> Stat { get; private set; }
 
-        public Stats(int attack, int defense, int needed, int enGain, int gold, int exp, int level) {
+        public Stats(int attack, int defense, int energyGain, int neededEnergy, int gold, int exp, int level) {
             Stat = new Dictionary<string, int>();
             Stat["Attack"] = attack;
             Stat["Defense"] = defense;
             Stat["Energy"] = 0;
-            Stat["EnergyGain"] = needed;
-            Stat["NeededEnergy"] = enGain;
+            Stat["EnergyGain"] = energyGain;
+            Stat["NeededEnergy"] = neededEnergy;
             Stat["Gold"] = gold;
             Stat["Exp"] = exp;
             Stat["Level"] = level;
@@ -26,7 +26,7 @@ namespace Roguicka.Actors {
         }
 
         public void UseEnergy() {
-            Stat["Energy"] = 0;
+            Stat["Energy"] -= Stat["NeededEnergy"];
         }
 
     }

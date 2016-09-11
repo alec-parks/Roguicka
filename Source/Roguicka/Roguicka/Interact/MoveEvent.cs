@@ -51,7 +51,8 @@ namespace Roguicka.Interact {
             if (Map.GetCell(newX, newY).IsWalkable) {
                 if (CheckForBlock(newX, newY)) {
                     //if (Actor.Type == ActorType.Hero) {
-                    var blocker = LogicEngine._actors.First(blocked => blocked.X == newX && blocked.Y == newY && blocked is IDestructible) as Player;
+                    var possibleTargets = LogicEngine._actors.OfType<Player>();
+                    var blocker = possibleTargets.First(blocked => !blocked.IsDead && blocked.X == newX && blocked.Y == newY && blocked is IDestructible) as Player;
                     if (blocker.Type != Actor.Type) {
                         
                         InteractStack.Push(new FightEvent(Actor, blocker, EFightEvent.Hit));
@@ -70,6 +71,8 @@ namespace Roguicka.Interact {
                     
                 }
             }
+            //Once you've moved, THEN check if the actor collided with anything
+            LogicEngine.CheckCollisionWithEntity(Actor);
             moveX = moveY = 0;
             return turn;
         }

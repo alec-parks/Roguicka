@@ -3,7 +3,8 @@
     public enum ActorType
     {
         Hero,
-        Monster
+        Monster,
+        Object
     }
 
 

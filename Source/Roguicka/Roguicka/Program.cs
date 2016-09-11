@@ -22,7 +22,9 @@ namespace Roguicka
             Engine engine = new Engine(ScreenWidth,ScreenHeight,FontFileName);
             Hero player = new Hero(25,25,50,'@');
             player.Stats = new Stats(10,10,10,8,0,0,1);
+            
             Engine.AddActor(player);
+           
             MonsterGenerator.LoadMonstersFromJSON(@"Beastiary" + DirectorySeparatorChar + "Monsters");
             InteractStack.Push(new SpawnEvent(10));
             engine.Update();

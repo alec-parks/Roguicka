@@ -25,13 +25,19 @@ namespace Roguicka.Interact {
         }
         
         public override void Trigger() {
-            //Still kinda weird
             int damage = Sender.Stats.Stat["Attack"] + MonsterGenerator.Random.Next(-2 - (Sender.Stats.Stat["Level"]), 2 + (Sender.Stats.Stat["Level"]));
             damage -= Reciever.Stats.Stat["Defense"] / 4;
             //Make sure you can't heal the opponent when attacking
             damage = Math.Max(damage, 0);
             Reciever?.TakeDamage(damage);
-            Messages[0] = Sender.Type.ToString() + " attacked for " + damage + " dmg";
+            if (Sender.Type == ActorType.Hero) {
+                var enemy = ((Monster)Reciever).MonsterType.ToString();
+                Messages[0] = "Hero attacked " + enemy + " for " + damage + " damage";
+            }
+            else {
+                var enemy = ((Monster)Sender).MonsterType.ToString();
+                Messages[0] = enemy + " attacked you for " + damage + " damage";
+            }
         }
 
     }

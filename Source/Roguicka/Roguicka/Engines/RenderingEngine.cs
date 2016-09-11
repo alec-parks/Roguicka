@@ -12,7 +12,10 @@ namespace Roguicka.Engines
     public class RenderingEngine
     {
         private readonly RLRootConsole _rlConsole;
-        private readonly IRoguickaMap _map;
+
+        //Im so sorry
+        private static IRoguickaMap _map;
+
         private int _centerX;
         private int _centerY;
 
@@ -23,6 +26,11 @@ namespace Roguicka.Engines
             _rlConsole = rootConsole;
             _centerX = rootConsole.Width / 2;
             _centerY = rootConsole.Height / 2;
+        }
+
+        //I can't think of other ways
+        public static void SetMap(RoguickaMap map) {
+            _map = map;
         }
 
         public void ComputeFov(Hero hero)
@@ -73,12 +81,22 @@ namespace Roguicka.Engines
             }
         }
 
+        public void DrawVisibleEntities(IEnumerable<Entity> entities) {
+            foreach(var entity in
+                from entity in entities
+                let cell = _map.GetCell(entity.X, entity.Y)
+                where cell.IsInFov
+                select entity) {
+                _rlConsole.Set(entity.X, entity.Y, entity.Color, null, entity.Symbol);
+            }
+        }
+
         public void DrawVisiblePlayers(IEnumerable<Player> actors)
         {
             foreach (var actor in
                 from actor in actors.OrderBy(actor => actor.CurrentHp)
                 let cell = _map.GetCell(actor.X, actor.Y)
-                where cell.IsInFov && ( actor.Type == ActorType.Hero || actor.Type == ActorType.Monster )
+                where cell.IsInFov
                 select actor)
             {
                 _rlConsole.Set(actor.X, actor.Y, actor.Color, null, actor.Symbol);

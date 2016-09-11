@@ -2,6 +2,7 @@
 using System.Linq;
 using Roguicka.Actors;
 using Roguicka.Maps;
+using Roguicka.Interact;
 
 namespace Roguicka.Engines
 {
@@ -10,38 +11,15 @@ namespace Roguicka.Engines
         private const int ChaseTurns = 3;
         public static IEnumerable<IActor> _actors;
 
-        public bool Move(IActor actor, int newX, int newY, IRoguickaMap map)
-        {
-            bool turn = false;
-            if (map.GetCell(newX, newY).IsWalkable)
-            {
-                if (CheckForBlock(newX, newY))
-                {
-                    var blocker = _actors.First(blocked => blocked.X == newX && blocked.Y == newY && blocked is IDestructible) as IDestructible;
-                    blocker?.TakeDamage(10);
-                    turn = true;
-                }
-                else
-                {
-                    actor.X = newX;
-                    actor.Y = newY;
-                    turn = true;
-                }
-            }
-            return turn;
-        }
 
-        private bool CheckForBlock(int x, int y)
-        {
-            bool blocked = false;
-            foreach (var actor in _actors)
-            {
-                if (actor.X == x && actor.Y == y && actor.Blocks)
-                {
-                    blocked = true;
+        //Im sorry for using a static
+        public static void CheckCollisionWithEntity(Player p) {
+            var _entities = _actors.OfType<Entity>();
+            foreach(var e in _entities) {
+                if (e.IsStandingOn(p)) {
+                    InteractStack.Push(new SteppedOnEvent(p, e));
                 }
             }
-            return blocked;
         }
 
         public void Actors(IEnumerable<IActor> actors)
