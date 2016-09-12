@@ -1,11 +1,5 @@
 ﻿using RLNET;
-using RogueSharp;
 using Roguicka.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Roguicka.Actors {
     public class Stairs : Entity {

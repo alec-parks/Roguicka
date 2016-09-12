@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Roguicka.Actors;
-using Roguicka.Maps;
 using Roguicka.Interact;
 
 namespace Roguicka.Engines

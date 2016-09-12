@@ -1,6 +1,7 @@
 ﻿namespace Roguicka.Interact {
-    public class InteractEvent {
-        public virtual void Trigger() { }
+    public abstract class InteractEvent
+    {
+        public abstract void Trigger();
 
         public string[] Messages = new string[10];
 

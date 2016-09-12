@@ -3,7 +3,6 @@ using RogueSharp;
 using RogueSharp.Random;
 using System;
 using System.Linq;
-using Roguicka.Actors;
 
 namespace Roguicka.Maps
 {

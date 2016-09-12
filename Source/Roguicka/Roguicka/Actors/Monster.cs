@@ -20,11 +20,6 @@ namespace Roguicka.Actors {
             //Symbol = monsterType;
         }
 
-        public override void TakeDamage(int amount) {
-            Description = "A scary monster, with " + CurrentHp + "/" + MaxHp + "hp";
-            base.TakeDamage(amount);
-        }
-
         protected override void SetDead() {
             InteractStack.Push(new DeathEvent(Engine.GetHero(), this));
             base.SetDead();

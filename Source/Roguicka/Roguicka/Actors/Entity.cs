@@ -1,17 +1,16 @@
 ﻿using RLNET;
 
 namespace Roguicka.Actors {
-    public class Entity : IActor {
+    public abstract class Entity : IActor {
         public bool Blocks { get; }
         public RLColor Color { get; }
-        public string Description { get; set; }
-        public char Symbol { get; private set; }
+        public char Symbol { get; }
         public ActorType Type { get; }
         public int X { get; set; }
         public int Y { get; set; }
 
 
-       public Entity() {
+        protected Entity() {
             Blocks = false;
             Color = RLColor.White;
             Symbol = '0';
@@ -19,7 +18,7 @@ namespace Roguicka.Actors {
             Y = 1;
         }
 
-        public Entity(ActorType actorType, int x, int y, char symbol, bool blocker, RLColor color) {
+        protected Entity(ActorType actorType, int x, int y, char symbol, bool blocker, RLColor color) {
             Type = actorType;
             X = x;
             Y = y;
@@ -28,13 +27,13 @@ namespace Roguicka.Actors {
             Symbol = symbol;
         }
 
-        public bool IsStandingOn(Player p) {
-            if (p.X == X && p.Y == Y) return true;
-            return false;
+        public bool IsStandingOn(Player p)
+        {
+            return p.X == X && p.Y == Y;
         }
 
         //There may be more of these in the future, depending on what type of behaviour we want
-        public virtual void Interact(Player p) { }
+        public abstract void Interact(Player p);
 
     }
 }

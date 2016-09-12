@@ -11,7 +11,6 @@ namespace Roguicka.Actors
         public bool Blocks { get; private set; } = true;
         public RLColor Color { get; private set; } = RLColor.Black;
         public char Symbol { get; private set; }
-        public string Description { get; set; } = "A player";
         public int CurrentHp { get; set; }
         public int MaxHp { get; private set; }
         public bool IsDead => CurrentHp <= 0;
