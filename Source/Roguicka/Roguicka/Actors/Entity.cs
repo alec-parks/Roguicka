@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RLNET;
+﻿using RLNET;
 
 namespace Roguicka.Actors {
     public class Entity : IActor {
@@ -28,7 +23,7 @@ namespace Roguicka.Actors {
             Type = actorType;
             X = x;
             Y = y;
-            Blocks = false;
+            Blocks = blocker;
             Color = color;
             Symbol = symbol;
         }
