@@ -27,7 +27,7 @@ namespace Roguicka.Actors
             Stats = new Stats(1,1,1,1,1,1,1);
         }
 
-        public void LevelUpHP(int amount) {
+        public void LevelUpHp(int amount) {
             MaxHp += amount;
             CurrentHp = MaxHp;
         }
@@ -43,10 +43,6 @@ namespace Roguicka.Actors
             MaxHp = hp;
             CurrentHp = hp;
 
-        }
-
-        public virtual void LevelUp() {
-            
         }
 
         public virtual void TakeDamage(int amount)

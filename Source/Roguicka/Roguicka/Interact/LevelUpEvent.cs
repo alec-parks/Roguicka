@@ -19,7 +19,7 @@ namespace Roguicka.Interact {
 
         public override void Trigger() {
             int hpChange = Random.Next(5, 10), atkChange = Random.Next(1, 6), defChange = Random.Next(1, 6);
-            _actor.LevelUpHP(hpChange);
+            _actor.LevelUpHp(hpChange);
             _actor.Stats.LevelUpStat("Attack", atkChange);
             _actor.Stats.LevelUpStat("Defense", defChange);
 
