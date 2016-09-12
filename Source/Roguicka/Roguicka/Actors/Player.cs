@@ -44,7 +44,7 @@ namespace Roguicka.Actors
 
         }
 
-        public virtual void TakeDamage(int amount)
+        public void TakeDamage(int amount)
         {
             if (amount >= 0)
             {

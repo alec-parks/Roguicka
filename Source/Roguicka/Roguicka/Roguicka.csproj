@@ -86,14 +86,16 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Beastiary\Monsters.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="Assets\Bestiary\Monsters.json" > 
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Fonts\terminal8x8.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="Assets\Fonts\terminal8x8.png" >
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Assets" />
+  </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties Beastiary_4Monsters_1json__JSONSchema="http://json-schema.org/draft-04/schema" />

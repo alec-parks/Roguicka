@@ -18,7 +18,7 @@ namespace Roguicka.Helpers {
         Druid = 'D'
     }
 
-    public class Beastiary {
+    public class Bestiary {
         public List<Monster> MonsterList = new List<Monster>();
     }
 
@@ -26,15 +26,15 @@ namespace Roguicka.Helpers {
 
         public static DotNetRandom Random = new DotNetRandom();
 
-        public static Beastiary Beastiary = new Beastiary();
+        public static Bestiary Bestiary = new Bestiary();
 
         //Here is where we create a monster from the prefabs
         public static Monster MakeMonster(int level, EMonsterType e) {
             //Make sure that they can spawn in a valid place
             var walkableCell = Game.Instance.Map.GetRandomCell();
             //Fill up monster with stats
-            Stats Stats = Beastiary.MonsterList.Single(x => x.MonsterType == e).Stats;
-            int MaxHp = Beastiary.MonsterList.Single(x => x.MonsterType == e).CurrentHp;
+            Stats Stats = Bestiary.MonsterList.Single(x => x.MonsterType == e).Stats;
+            int MaxHp = Bestiary.MonsterList.Single(x => x.MonsterType == e).CurrentHp;
             Monster monster = new Monster(e, MaxHp, Stats, walkableCell.X, walkableCell.Y, (char)e, RLColor.Red);
 
             //This is where we bring the monster up to the required level
@@ -50,15 +50,15 @@ namespace Roguicka.Helpers {
         //This just picks a EMonsterType at random then calls the normal make monster function
         public static Monster MakeRandomMonster(int level) {
             
-            int place = Random.Next(Beastiary.MonsterList.Count() - 1);
-            return MakeMonster(level, Beastiary.MonsterList[place].MonsterType);
+            int place = Random.Next(Bestiary.MonsterList.Count() - 1);
+            return MakeMonster(level, Bestiary.MonsterList[place].MonsterType);
         }
 
-        //Just deserialize the JSON right into the Beastiary
+        //Just deserialize the JSON right into the Bestiary
         public static void LoadMonstersFromJSON(string fileName) {
             using (StreamReader r = new StreamReader(fileName + ".json")) {
                 string json = r.ReadToEnd();
-                Beastiary = JsonConvert.DeserializeObject<Beastiary>(json);
+                Bestiary = JsonConvert.DeserializeObject<Bestiary>(json);
             }
         }
 
