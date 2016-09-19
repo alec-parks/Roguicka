@@ -1,0 +1,4 @@
+﻿[
+  {"Power":10,"Range":10,"Area":10,"Elements":[0],"DamageType":"Fire","Name":"FireBolt"},
+  {"Power":10,"Range":10,"Area":10,"Elements":[0,0,0],"DamageType":"Fire","Name":"Fireball"}
+]

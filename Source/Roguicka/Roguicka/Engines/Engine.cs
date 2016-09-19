@@ -16,23 +16,22 @@ namespace Roguicka.Engines {
         private GameState _gameState;
         private RenderingEngine _renderingEngine;
         private LogicEngine _logicEngine;
-        private FloorLevelHelper _levelHelper;
 
         public Engine(int width, int height, string file) {
             _rootConsole = new RLRootConsole(file, width, height, 8, 8, 1f, "RoguickaRL");
             _gameState = GameState.PlayerTurn;
 
-            _levelHelper = new FloorLevelHelper();
+            var levelHelper = new FloorLevelHelper();
 
-            _levelHelper.AddLevel("First", new RoguickaMap(Map.Create(new CaveMapCreationStrategy<Map>(50, 50, 45, 4, 3))));
-            _levelHelper.AddLevel("Second", new RoguickaMap(Map.Create(new CaveMapCreationStrategy<Map>(50, 50, 55, 4, 3))));
+            levelHelper.AddLevel("First", new RoguickaMap(Map.Create(new CaveMapCreationStrategy<Map>(50, 50, 45, 4, 3))));
+            levelHelper.AddLevel("Second", new RoguickaMap(Map.Create(new CaveMapCreationStrategy<Map>(50, 50, 55, 4, 3))));
 
-            _levelHelper.SetLevel("First");
+            levelHelper.SetLevel("First");
 
-            Stairs stairs = new Stairs(_levelHelper, 25, 26);
+            Stairs stairs = new Stairs(levelHelper, 25, 26);
             AddActor(stairs);
 
-            _renderingEngine = new RenderingEngine(_levelHelper.CurrentLevel, _rootConsole);
+            _renderingEngine = new RenderingEngine(levelHelper.CurrentLevel, _rootConsole);
             _logicEngine = new LogicEngine();
             
         }
@@ -62,7 +61,7 @@ namespace Roguicka.Engines {
         }
 
         public static Hero GetHero() {
-            return (Hero)_actors.Single(actor => actor.Type == ActorType.Hero);
+            return _actors.Single(actor => actor.GetType() == typeof(Hero)) as Hero;
         }
 
         private void OnRootConsoleRender(object sender, UpdateEventArgs e) {
@@ -149,7 +148,7 @@ namespace Roguicka.Engines {
 
                     break;
                 case RLKey.C:
-                    GetHero().AddElement(new FireElement());
+                    GetHero().AddElement(ElementType.Fire);
 
                     break;
                 case RLKey.Space:

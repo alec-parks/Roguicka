@@ -30,9 +30,8 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="RogueSharp, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RogueSharp.2.0.0.0\lib\portable-net40+sl50+win+wpa81+wp80\RogueSharp.dll</HintPath>
@@ -45,17 +44,19 @@
     <Reference Include="RLNET">
       <HintPath>..\packages\RLNET.1.0.6\lib\RLNET.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <HintPath>..\..\..\..\..\..\..\Library\Frameworks\Mono.framework\Versions\4.4.2\lib\mono\4.5-api\System.Runtime.Serialization.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actors\Enums.cs" />
-    <Compile Include="Actors\FireElement.cs" />
     <Compile Include="Actors\Hero.cs" />
     <Compile Include="Actors\IActor.cs" />
     <Compile Include="Actors\IDestructible.cs" />
-    <Compile Include="Actors\IElement.cs" />
     <Compile Include="Actors\Entity.cs" />
     <Compile Include="Actors\Monster.cs" />
     <Compile Include="Actors\Player.cs" />
+    <Compile Include="Actors\Spell.cs" />
     <Compile Include="Actors\Stairs.cs" />
     <Compile Include="Actors\Stats.cs" />
     <Compile Include="Engines\Engine.cs" />
@@ -86,15 +87,19 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Bestiary\Monsters.json" > 
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="Assets\Bestiary\Monsters.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Fonts\terminal8x8.png" >
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="Assets\Fonts\terminal8x8.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Spells\Spellbook.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets" />
+    <Folder Include="Assets\Spells" />
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
